@@ -12,7 +12,7 @@
 --   5. applications / oem_numbers / cross_refs -> пълно презареждане (derived)
 -- Всичко в една транзакция с rollback при грешка.
 -- =============================================================================
-CREATE PROCEDURE [dbo].[usp_sync_from_buffer]
+CREATE OR ALTER PROCEDURE [dbo].[usp_sync_from_buffer]
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -61,9 +61,9 @@ BEGIN
             updated_at   = @now
         WHEN NOT MATCHED BY TARGET THEN
             INSERT (barcode, eng_descr, gr_descr, category_raw, side,
-                    cost_price, weight, first_seen, last_seen, is_active, updated_at)
+                    cost_price, sale_price, weight, first_seen, last_seen, is_active, updated_at)
             VALUES (s.barcode, s.eng_descr, s.gr_descr, s.category, s.side,
-                    s.price, s.weight, @now, @now, 1, @now)
+                    s.price, ROUND(s.price * 1.98, 2), s.weight, @now, @now, 1, @now)
         WHEN NOT MATCHED BY SOURCE AND tgt.is_active = 1 THEN
             UPDATE SET is_active = 0, updated_at = @now;
 
