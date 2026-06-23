@@ -1,0 +1,173 @@
+category_raw;parts_count;genart_id;genart_en;confidence;note
+BUMPER GRILLES/FRAMES - AIRDUCTS;5464;244;Ventilation Grille, bumper;high;
+FRONT BUMPERS;3725;938;Bumper;high;
+BUMPER MOULDINGS;3687;1002;Trim/Protection Strip, bumper;high;Лайсни за броня - не самата броня (смяна от 938)
+PLASTIC INNER FENDERS;3605;1560;Liner, wheelhouse;high;
+DOOR MIRROR;3264;50;Exterior Mirror;high;
+PLASTIC FENDERS (FLARES) - ROCCKER PANEL - DOOR MOULDINGS;3048;1004;Trim/Protection Strip, wing;mid;FLARE доминира. DOOR MOULDING=1005, DOOR SILL PLASTIC=1345
+DOOR HANDLES;3043;1373;Exterior Door Handle;high;
+DOOR MIRROR (A QUALITY);2890;50;Exterior Mirror;high;
+WINDOW REGULATORS B QUALITY;2799;1561;Window Regulator;high;
+FRONT FENDERS;2770;449;Wing;high;
+HEAD LAMPS DEPO;2748;259;Headlight;high;
+REAR BUMPERS;2387;938;Bumper;high;
+GRILLES/GRILLE NETS/GRILLE SIDES/GRILLE PIECES;2376;472;Radiator Grille;high;Потвърдено по описания - GRILLE доминира
+TAIL LAMP DEPO;2313;290;Tail Light;high;
+ORIGINAL HYUNDAI KAT 27;2082;;;SKIP;OE група без категория - GenArt само по описание на артикул
+FRONT BUMPER BRACKETS;1999;939;Mounting Bracket, bumper;high;
+TOW HOOK COVERS/HEAD LAMP WASHER COVERS;1960;4806;Cover, tow hook;mid;75% TOW HOOK COVER. Капачки фароструйки няма GenArt
+WINDOW REGULATORS A QUALITY (ALGO);1840;1561;Window Regulator;high;
+DOOR MIRROR GLASSES AFTER MARKET;1737;2810;Mirror Glass, exterior mirror;high;Смяна от 1488 (генерично стъкло) към стъкло за външно огледало
+RADIATORS;1717;470;Radiator, engine cooling;high;
+LAMPS CORNER/SIDE/FRONT/DRL;1641;62;Direction Indicator;mid;По описания: CORNER доминира. SIDE LAMP=900, DAYTIME=2466
+HEAD LAMPS TYC;1634;259;Headlight;high;
+FRONT PANELS (FRONT APRON) AND COMPONENTS;1593;208;Radiator Support;high;Потвърдено: FRONT PANEL/HEAD LAMP PANEL/RADIATOR SUPPORT
+GAS SPRINGS HOOD-TAIL GATE;1441;219;Gas Spring, boot/cargo area;mid;TAIL GATE доминира. GAS SPRING HOOD=514
+SPOILERS;1396;845;Spoiler;high;
+REAR LAMPS FOG/REVERSE/REFLECTOR/LICENCE/BRAKE;1334;;;REVIEW;Разцепи по descr: REFLECTOR няма GenArt / FOG=291 / LICENCE=293 / THIRD BRAKE=1428 / REVERSE=292
+HOOD;1270;531;Bonnet;high;
+REAR BUMPER BRACKETS;1253;939;Mounting Bracket, bumper;high;
+PLASTIC EGINE COVER;1220;4624;Engine Guard/Skid Plate;mid;По описания: кори под/около двигателя - не декоративен капак (смяна от 4256)
+ORIGINAL KIA KAT 27;1133;;;SKIP;OE група без категория
+DOOR MIRROR COVERS AFTER MARKET;1128;23;Cover, exterior mirror;high;
+TAIL LAMPS AFTER MARKET (VARIOUS);1120;290;Tail Light;high;
+BUMPER REINFORCEMENT FRONT;1089;1566;Support, bumper;high;Усилвател греда - не абсорбер (смяна от 1087)
+GAS SPRING HOOD-TAIL GATE MARELLI;996;219;Gas Spring, boot/cargo area;mid;TAIL GATE доминира. GAS SPRING HOOD=514
+A/C CONDENSER;954;448;Condenser, air conditioning;high;
+COOLING FAN;934;4349;Fan, engine cooling;high;Ако са само моторчета ползвай 792
+DOOR LOCKS/CABLES;908;1361;Door Lock;high;
+PANEL FRONT;901;208;Radiator Support;high;Предна маска
+SIDE FRAMES;869;755;Wheelhouse;mid;По описания: REAR WHEEL ARCH ремонтни панели (беше REVIEW)
+BUMPER/FENDER BRACKETS-ABSORBERS FRONT-REAR;837;939;Mounting Bracket, bumper;mid;Разнородни стойки. FOG LAMP BRACKET=102
+HINGE;820;740;Hinge, bonnet;high;82% FRONT HOOD HINGE (смяна от 1568). DOOR HINGE=1568
+GRILLE MOULDINGS/GRILLE FRAMES/GRILLE BRACKETS/LAMP MOULDINGS;805;474;Frame, radiator grille;mid;HEAD LAMP RIM=882 Headlight Trim
+HEAD LAMPS VALEO;791;259;Headlight;high;
+SILLS;786;177;Rocker Panel;high;Потвърдено: DOOR SILL метални прагове
+TAIL LAMPS MARELLI;767;290;Tail Light;high;
+HEAD LAMPS MARELLI;766;259;Headlight;high;
+WIPER WASHER TANK;747;837;Washer Fluid Reservoir, window cleaning;high;Алт. 2900 (дубликат в TecDoc)
+FOG LAMPS DEPO;737;289;Front Fog Light;high;
+FOG LAMPS AFTER MARKET (VARIOUS);706;289;Front Fog Light;high;
+AIRDUCT;674;60987;Grille, intake air duct;low;Пластмасови въздуховоди за спирачки/радиатор - няма точен GenArt
+RADIATORS NRF;673;470;Radiator, engine cooling;high;
+PANELS-INNER FENDERS & ECT.;670;;;REVIEW;Сборна: арки/ъгли калник/подове/скинове - само артикулни правила (поправено след одит)
+HEAD LAMPS HELLA;620;259;Headlight;high;
+DOOR SWITCHES;614;1761;Switch, window regulator;high;По описания: DOOR SWITCH 4-14 пина = бутони ел. стъкла (смяна от 808!)
+LAMPS ULO;579;290;Tail Light;high;Потвърдено: всички TAIL LAMP
+DOOR CHECK;555;3251;Door Check;high;Алт. 7569 (дубликат)
+ABSORBER FRONT-REAR;545;1087;Impact Absorber, bumper;high;
+DOOR FRONT/REAR/SLIDING;527;530;Door, body;high;
+PLASTIC COVERS BUMPER;526;4624;Engine Guard/Skid Plate;mid;По описания: FRONT BUMPER UNDER COVER - долни кори (смяна от 938)
+RADIATORS INTERCOOLER;521;468;Charge Air Cooler;high;Интеркулер - не воден радиатор (смяна от 470)
+AUXILIARY TANK;516;397;Expansion Tank, coolant;high;
+MIRROR LAMPS/SIDE/FOOT/SIDE ASSIST;504;62;Direction Indicator;mid;Потвърдено: мигачи в огледала. FOOT LAMP няма GenArt
+FRONT FENDER BRACKETS;487;4072;Holder, wing;high;Стойка калник (смяна от 449)
+TAIL LAMPS VALEO;485;290;Tail Light;high;
+BUMPER ENDS;477;938;Bumper;mid;Потвърдено: крайни части на броня - няма отделен GenArt
+REAR FENDERS;469;901;Quarter Panel;high;Потвърдено: REAR FENDER
+BUMPER REINFORCEMENT REAR;462;1566;Support, bumper;high;Смяна от 1087
+SPLASH GUARD BRAKE DISC;447;1330;Splash Guard, brake disc;high;
+BUMPER-GRILLE STIFFENER;407;1566;Support, bumper;mid;По описания: BUMPER PLASTIC REINFORCEMENT (смяна от 245)
+TAIL LAMPS HELLA;400;290;Tail Light;high;
+HOOD/PANEL LOCKS;367;1365;Bonnet Lock;high;Брава за капак (смяна от 531)
+RADIATOR KOYO;365;470;Radiator, engine cooling;high;
+HEAD LAMPS AFTER MARKET (VARIOUS);355;259;Headlight;high;
+REAR WIPER;355;301;Wiper Arm, window cleaning;high;По описания: REAR WIPER ARM WITH BLADE (смяна от 295)
+HEATER RADIATORS;343;467;Heat Exchanger, interior heating;high;Радиатор парно - не воден (смяна от 470)
+HEAD LAMP-TAIL LAMP BRACKET;335;101;Bracket, headlight;high;Потвърдено: HEAD LAMP BRACKET доминира
+WINDOW REGULATORS A QUALITY (AC ROLCAR);304;1561;Window Regulator;high;
+TAIL LAMP TYC;296;290;Tail Light;high;
+1802 - GROUP FIAT KAT 28;295;;;SKIP;Доставчишка група без категория
+FOG LAMPS TYC;233;289;Front Fog Light;high;
+HOOD INSULATOR/WIPER PANELS;224;1353;Engine Compartment Noise Insulation;mid;68% HOOD INSULATOR. WIPER PANEL няма GenArt
+HEAD-SIGNAL LAMP-WIPER SWITCHES;217;1563;Steering Column Switch;high;
+UNDERBODY COVER PLASTIC;215;4624;Engine Guard/Skid Plate;high;
+RADIATORS VALEO;210;470;Radiator, engine cooling;high;
+PLASTIC COVER PANELS;205;1558;Cover, front apron;mid;По описания: FRONT PANEL PLASTIC COVER (беше REVIEW)
+PANELS REAR;203;389;Rear Panel;high;
+FOG LAMPS/DAYLIGHTS/REFLECTORS/REGULATORS VALEO;201;289;Front Fog Light;mid;Смесена - 2466 DRL и 700 Actuator headlight levelling по eng_descr
+1802 - GROUP FIAT KAT 35;195;;;SKIP;Доставчишка група без категория
+GAS SPRINGS TAIL GATE ELECTRIC;195;7413;Electric Motor, tailgate;high;Потвърдено: GAS SPRING TAIL GATE ELECTRIC
+RADIATOR BRACKETS;193;476;Radiator Mounting;high;Стойки радиатор (смяна от 470)
+FOG LAMPS/DAYLIGHTS/REFLECTORS/REGULATORS HELLA;191;289;Front Fog Light;high;FOG LAMP доминира ясно
+HOOD/FENDER INSTALATION KITS;187;;;REVIEW;FENDER/HOOD INSTALLATION KIT - няма чист GenArt
+REPAIR KIT HEAD LAMP;173;6327;Repair Kit, headlight;high;Смяна от 259
+RADIATORS NRF-VALEO-KOYO-NISSENS;173;470;Radiator, engine cooling;high;
+AIR FILTER BOX;171;8147;Housing, air filter;high;
+BUMPER REINFORCEMENT PLASTIC-FRONT/REAR;170;1566;Support, bumper;high;Потвърдено: BUMPER REINFORCEMENT PLASTIC
+LICENCE PLATES;166;746;Licence Plate Holder;high;Потвърдено: LICENCE PLATE PLASTIC - основи/подложки
+ACCESSORIE LAMPS (LEXUS-SMOKE etc);161;290;Tail Light;low;Тунинг комплекти - и HEAD LAMP SET (=259) вътре
+MUD FLAPS;160;1715;Mudflap;high;
+FOG LAMPS/DAYLIGHTS/REFLECTORS/REGULATORS MARELLI;154;289;Front Fog Light;mid;Както VALEO реда
+DOOR ACTUATORS/CENTRAL LOCK MOTORS;150;791;Actuator, central locking system;high;
+BUMPER SENSOR BRACKET;147;4844;Holder, sensor (parking distance control);high;Смяна от 939
+DOOR SWITCHS OTHER;138;;;REVIEW;По описания: TRUNK SWITCH/CENTRAL LOCKING/START-STOP - разнородно (смяна от 808)
+VARIOUS PLASTIC PARTS;129;;;REVIEW;FUEL TANK DOOR доминира - няма GenArt в дъмпа
+ENGINE MOUNT;113;247;Mounting, engine;high;
+DOOR ROLLER GUIDE;113;3846;Roller Guide, sliding door;high;
+MOTOR FOR WIPER WASHER TANK;109;794;Washer Fluid Pump, window cleaning;high;Алт. 2903 (дубликат)
+1802 - GROUP FIAT KAT 20;102;;;SKIP;Доставчишка група без категория
+WHEEL COVER;102;1436;Cover, wheels;high;Тасове
+CONDENSER KOYO;95;448;Condenser, air conditioning;high;
+KEY CYLINDER;92;1378;Lock Cylinder;high;Ако са комплекти ползвай 1379
+VISTEON;86;290;Tail Light;low;По описания: предимно TAIL LAMP (беше REVIEW)
+TAIL GATE;81;390;Back Door;high;
+DOOR MIRRORS LOOK M3;79;50;Exterior Mirror;high;
+SIDE REAR PANELS;77;901;Quarter Panel;mid;Потвърдено: страници за пикап кабини
+EMPLEMS;63;4221;Emblem;high;
+BUMPER TUNING;60;938;Bumper;high;
+PDC SENSORS;59;2412;Sensor, park distance control;high;Алт. 2623 (дубликат)
+ALARM SWITCHES;57;816;Hazard Warning Light Switch;high;Потвърдено: ALARM SWITCH = бутон аварийни
+DOOR MIRROR SWITCHES;57;2790;Switch, exterior mirror adjustment;high;Смяна от 50. Алт. 3367
+RADIATORS MAHLE PREMIUM LINE;57;470;Radiator, engine cooling;high;
+MOTOR FOR WINDOW REGULATORS;53;200;Electric Motor, window regulator;high;Моторчето - не механизмът (смяна от 1561)
+AUXILIARY TANK CAPS;50;56;Cap, coolant tank;high;
+RADIATORS MAHLE-BEHR;44;470;Radiator, engine cooling;high;
+RADIATORS MARELLI;44;470;Radiator, engine cooling;high;
+A/C CONDENSER NRF;34;448;Condenser, air conditioning;high;
+TRUNK LID;33;1506;Boot-/Cargo Area Lid;high;
+TAIL LAMPS AFTER MARKET;28;290;Tail Light;high;
+A/C CONDENSER NISSENS;27;448;Condenser, air conditioning;high;
+TIRE PRESURE SENSOR;25;2232;Wheel Sensor, tyre-pressure monitoring system;high;Алт. 5132 (дубликат)
+GRILLE TUNING;23;472;Radiator Grille;high;
+HEAD LAMP LENS;23;3499;Light Glass, headlight;high;Стъкло за фар (смяна от 259). Алт. 14 Diffusing Lens
+RADIATORS INTERCOOLER NISSENS;21;468;Charge Air Cooler;high;Смяна от 470
+A/C CONDENSER MARELLI;19;448;Condenser, air conditioning;high;
+SWITCHES VALEO;19;1563;Steering Column Switch;mid;Потвърдено: лостчета на волана
+BULB HOLDERS;19;494;Bulb Holder, tail light assembly;mid;По описания: TAIL LAMP BULB HOLDER (беше REVIEW). Алт. 495
+ROOF SPOILER;18;845;Spoiler;high;
+RADIATORS NISSENS;17;470;Radiator, engine cooling;high;
+Shaders;17;3674;Sun Visor;high;По описания: SUN VISOR сенници (смяна от 4090)
+STEERING WHEEL SWITCHES;14;1563;Steering Column Switch;high;По описания: лостчета на кормилната колона
+TAIL BODY;13;;;SKIP;Каросерии за пикап - няма GenArt (беше REVIEW)
+REAR AXLE;11;395;Axle Beam;mid;Потвърдено: REAR AXLE греди
+HEATER RADIATORS NISSENS;10;467;Heat Exchanger, interior heating;high;Смяна от 470
+PLASTIC DOOR SILL TUNING;9;1345;Sill Trim;high;
+FRONT LAMPS-DAYLIGHT AFTER MARKET;9;2466;Daytime Running Light;high;Потвърдено: DAYTIME RUNNING LIGHT LED
+A/C CONDENSER VALEO;8;448;Condenser, air conditioning;high;
+SPOILER TUNING;7;845;Spoiler;high;
+RADIATORS HELLA;6;470;Radiator, engine cooling;high;
+WINDOW REGULATORS MARELLI;6;1561;Window Regulator;high;
+RADIATORS INTERCOOLER VALEO;5;468;Charge Air Cooler;high;Смяна от 470
+COOLING FAN NRF;5;4349;Fan, engine cooling;high;
+COOLING FAN NISSENS;5;4349;Fan, engine cooling;high;
+SWITCHES MARELLI;4;1563;Steering Column Switch;mid;Потвърдено: лостчета на волана
+BATTERY RADIATOR;4;5031;Radiator, traction battery;high;Потвърдено: RADIATOR HYBRID BATTERY
+INTERIOR COVERS;4;938;Bumper;low;По описания: задни капачки за броня - не интериор (беше REVIEW)
+WINDOW REGULATORS VALEO;4;1561;Window Regulator;high;
+BUMPERS FRONT - REAR & BUMPER ENDS;3;938;Bumper;high;Смяна от 939
+COOLING FAN VALEO;3;4349;Fan, engine cooling;high;
+INACTIVE ITEMS;3;;;SKIP;Неактивни артикули
+SIDE FRAMES-PILLARS-SILLS;2;1345;Sill Trim;high;По описания: DOOR SILL PLASTIC (смяна от 177)
+ORIGINAL STOCK;2;;;SKIP;Без категория
+HEATER RADIATORS VALEO;2;467;Heat Exchanger, interior heating;high;Смяна от 470
+TAIL LAMP LENS;1;290;Tail Light;low;Потвърдено стъкло за стоп - няма точен GenArt
+COOLING FAN MARELLI;1;4349;Fan, engine cooling;high;
+RADIATORS INTERCOOLER NRF;1;468;Charge Air Cooler;high;Смяна от 470
+RADIATORS INTERCOOLER MARELLI;1;468;Charge Air Cooler;high;Смяна от 470
+GRILLES;1;472;Radiator Grille;high;
+ISOFIX;1;;;SKIP;Аксесоар извън обхват
+HEATER RADIATORS NRF;1;467;Heat Exchanger, interior heating;high;Смяна от 470
+SNOW CHAINS;51;4114;Snow Chain;high;Метални вериги за сняг
+TEXTILE SNOW CHAINS;27;4114;Snow Chain;high;Текстилни чорапи за сняг - няма отделен GenArt в TecDoc
+BULBS VARIOUS;1;60560;Bulb;high;Крушки различни

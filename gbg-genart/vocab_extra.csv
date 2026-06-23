@@ -1,0 +1,528 @@
+# Добавки към речника на normalize_descr.py - редактирай ТОЗИ файл, не кода.
+# Формат: token;class[;extra]
+#   class: base|carrier|purpose|position|body|material|finish|features|
+#          packaging|variant|maker|engine|noise|typo|multiword
+#   extra: за typo = замяната; за multiword = слятата форма; за base = канонично име
+# След промяна: python3 normalize_descr.py --all && python3 article_genart.py
+START/STOP;features
+
+# finish
+CHROMED;finish;CHROME
+CHROME-CHROME/BLACK;finish;CHROME
+
+# features
+ACC;features
+KEYLESS;features
+SAFETY;features
+LOGO;features
+CRUISE;features
+WASH;purpose
+AIR;purpose
+
+# variant
+DUAL;variant
+HIGH;variant
+PERFORMANCE;variant
+EXTRA;variant
+VERSION;variant
+EXPORT;variant
+
+# noise: модел/трим имена в описанието на частта - не влияят на GenArt
+GRAND;noise
+M5;noise
+GTI/GTD;noise
+TREKKING;noise
+LEGACY;noise
+FRANCE;noise
+LIMITED;noise
+N-LINE;noise
+F46;noise
+C43;noise
+SUV;noise
+ONE;noise
+OUT;noise
+FUME;noise
+DOORS;noise
+FRONT-REAR;noise
+SYSTEM;noise
+
+# material
+METAL;material
+TITANIUM;material
+
+# base_type: реални видове части
+GRILLE-CHROME;base;GRILLE-CHROME
+STRIKER;base;STRIKER
+BEZEL;base;BEZEL
+
+# variant/shape
+BIG;variant
+OVAL;variant
+
+# features
+LOCKING;features
+LANE;features
+
+# typo / форма
+MOULD;typo;MOULDING
+FOG-LAMPS;typo;FOGLAMP
+
+# noise: трим нива, генерации, съкращения
+S-LINE/S5;noise
+S-LINE/SQ5;noise
+S63/S65;noise
+CLA45;noise
+A35;noise
+CLASSIC-ELEGANCE;noise
+II;noise
+H;noise
+COMBI;noise
+SIZE;noise
+SHAPE;noise
+STOP;noise
+SOCKS;noise
+HITCH;noise
+
+# variant: общи описателни атрибути
+MEDIUM;variant
+LOW;variant
+EDITION;variant
+ECO;variant
+HORIZONTAL;variant
+SNOW;variant
+HONEYCOMB;variant
+
+# packaging
+2PCS;packaging
+4PCS;packaging
+
+# features
+CORNERING;features
+RELEASE;features
+INDICATOR;features
+
+# finish / color
+BROWN;finish
+
+# typo / форма
+ALLUMINIUM;typo;ALUMINIUM
+WHEELARCHE;typo;WHEELARCH
+MULDING;typo;MOULDING
+GLAS;typo;GLASS
+# multiword (plural/variant форми)
+FOG LAMPS;multiword;FOGLAMP
+GRILLE CHROME;multiword;GRILLE-CHROME
+
+# noise: трим нива, модели, двигателни кодове
+EVO;noise
+M50;noise
+ST;noise
+ALL4;noise
+S-LINE/S4;noise
+S-LINE/SQ8;noise
+A45;noise
+GS-LINE;noise
+CARGO;noise
+V6;noise
+GTS;noise
+M2;noise
+E63;noise
+KOREA;noise
+LOGAN;noise
+ROAD;noise
+MARK;noise
+ESCAPE;noise
+-DIESEL;noise
+
+# position
+SIDEWALL;position
+FOOT;position
+
+# base_type
+FINISHER;base;FINISHER
+HOOK;base;HOOK
+OPENER;base;OPENER
+PUMP;base;PUMP
+
+# purpose
+STORAGE;purpose
+
+# features
+LAMPS;typo;LAMP
+ELECTRIC.HEATED;features
+MEM;features
+
+# finish
+NICKEL;finish
+
+# base_type
+BUTTON;base;BUTTON
+PAD;base;PAD
+SOCKET;base;SOCKET
+
+# typo
+NIPER;typo;WIPER
+BOUTON;typo;BUTTON
+QYALITY;typo;QUALITY
+REINFRORCEMENT;typo;REINFORCEMENT
+# base директно (typo механизмът не хваща тези)
+WHEELARCHE;base;WHEELARCH
+
+# noise
+OF;noise
+BUILD;noise
+-GDI;noise
+BI;noise
+M-PERFORMANCE;noise
+AM/FM;noise
+A5;noise
+F.L.H;noise
+F87;noise
+09-;noise
+BLISS;noise
+VEHICLES;noise
+RH;noise
+TWO;noise
+OFF;noise
+FRONTBUMPER;noise
+V;noise
+EL;noise
+S3;noise
+R56;noise
+AND;noise
+C;noise
+HIGHLINE;noise
+WHEELBASE;noise
+-TURBO;noise
+G12;noise
+SENS;noise
+
+# variant
+PLUS;variant
+EMERGENCY;variant
+
+# purpose
+LUGGAGE;purpose
+
+# base_type
+RING;base;RING
+ARCH;base;WHEELARCH
+EXTENSION;base;EXTENSION
+COLUMN;base;COLUMN
+
+# features
+WIRE;features
+BOSCH;features
+RADAR;features
+HEAT;features
+A.DIMMING;features
+BIXENON;features
+VIEW;features
+
+# finish / color
+ANTHRACITE;finish
+METALLIC;finish
+RED-YELLOW;finish
+
+# base_type
+UNIT;base;UNIT
+LEVER;base;LEVER
+BAND;base;BAND
+
+# typo
+REVERCE;typo;REVERSE
+RREAR;typo;REAR
+
+# variant
+MODERN;variant
+OLD;variant
+
+# noise
+CARRIER;noise
+CLA-35;noise
+CLIMBING;noise
+R-SPORT/S;noise
+4MATIC;noise
+RR;noise
+I;noise
+BACK;noise
+UP;noise
+EXHAUSTS;noise
+H/B-S.W;noise
+OR;noise
+S63;noise
+HEAD/SINGAL;noise
+-T;noise
+SORT;noise
+CAMPUS;noise
+
+# variant
+STYLE;variant
+DESIGN;variant
+MAXI;variant
+CLOSED;variant
+LARGE;variant
+BRIGHT;variant
+BUILT;variant
+SPORTING;variant
+
+# base_type (додатъчни)
+HOSE;base;HOSE
+RETAINER;base;RETAINER
+HOUSING;base;HOUSING
+MUDFLAPS;typo;MUDFLAP
+
+# purpose
+INLET;purpose
+WATER;purpose
+PETROL-HYBRID;features
+
+# finish
+ASHPERICAL;typo;ASPHERICAL
+
+# typo
+STIFENER;typo;STIFFENER
+MUDFLAP;base;MUDFLAP
+MUDFLAPS;base;MUDFLAP
+CROME;typo;CHROME
+KOITO;maker
+
+# noise (продължение)
+LH/RH;noise
+ALLROAD;noise
+ELEGANCE-AVANTARDE;noise
+S4;noise
+SMART;noise
+LAREDO;noise
+SUMMIT;noise
+LH;noise
+IN;noise
+MCV;noise
+F06;noise
+TYRES-MEDIUM;noise
+
+# variant (продължение)
+DEGREES;variant
+HEIGHT;variant
+ENTRY;variant
+
+# features (продължение)
+CHARGING;features
+CLOSING;features
+FUNCTION;features
+TOWING;features
+SMOKED;features
+
+# base_type (продължение)
+TRIANGLE;base;TRIANGLE
+BATTERY;base;BATTERY
+LICENCE;base;LICENCE
+PIPES;base;PIPE
+SEAL;base;SEAL
+CONNECTOR;base;CONNECTOR
+STRUT;base;STRUT
+SPRING;base;SPRING
+SUSPENSION;base;SUSPENSION
+
+# packaging (продължение)
+3PCS;packaging
+6PCS;packaging
+
+# finish (продължение)
+SATIN;finish
+CERIUM;finish
+
+# features (продължение)
+MULTIBEAM;features
+ANIMATION;features
+
+# variant (продължение)
+STRAIGHT;variant
+REMOVAL;variant
+
+# typo (продължение)
+REGUATOR;typo;REGULATOR
+FRONR;typo;FRONT
+MOTER;typo;MOTOR
+ELEC;typo;ELECTRIC
+LIGHTS;typo;LAMP
+
+# noise (продължение)
+PRIM;noise
+HO;noise
+10-;noise
+CUPRA;noise
+HALLA;noise
+VIANO;noise
+SQ5;noise
+UK;noise
+M40;noise
+INVINCIBLE;noise
+F55;noise
+VEHICLE;noise
+WY21W;noise
+CC;noise
+GTC;noise
+-I;noise
+COMBI/PANORAMA;noise
+M-TECK;noise
+GLC-43;noise
+
+# variant (продължение)
+BASIC;variant
+BEND;variant
+BEAM;variant
+CABIN;variant
+
+# finish (продължение)
+GREEN;finish
+BLK;finish;BLACK
+
+# features (продължение)
+PROTECTION;features
+L.ASSIST;features
+
+# base_type (продължение)
+MOUNTING;base;MOUNTING
+
+# typo (продължение)
+CHASSY;typo;CHASSIS
+MIDDRLE;typo;MIDDLE
+5P;body;5D
+ORIZONTAL;typo;HORIZONTAL
+
+# noise (продължение)
+RX400;noise
+M3/G80;noise
+SPORTLINE;noise
+F.L;noise
+E43;noise
+LIFE;noise
+MAGYAR;noise
+F56;noise
+135I;noise
+VOLUME;noise
+
+# features (продължение)
+HYBRID-PETROL;features
+REMOVABLE;features
+OFF-ROAD;features
+VISION;features
+REMOTE;features
+DAYTIME;features
+CHECK;features
+
+# finish (продължение)
+GOLD;finish
+AMBER;finish
+PRIMER;finish
+
+# position (продължение)
+INSIDE;position
+THIRD;position
+
+# base_type (продължение)
+PLATE;base;PLATE
+RADIO;base;RADIO
+CURTAIN;base;CURTAIN
+EXPANSION;base;EXPANSION
+BOX;base;BOX
+FILTER;base;FILTER
+
+# features (продължение)
+MULTIFUNCTION;features
+PLUG-IN;features
+DRIVING;features
+
+# finish (продължение)
+GRAPHITE;finish
+
+# typo (продължение)
+FENFER;typo;FENDER
+5DOOR;body;5D
+
+# noise (продължение)
+DIESEL-;noise
+BLUEHDI;noise
+DOOWON;noise
+V8;noise
+FRONT=REAR;noise
+EXCEPT;noise
+BRABUS;noise
+WHEELS;noise
+EXPERIENCE;noise
+M340I/M340IX;noise
+AUTOBIOGRAPHY;noise
+INSCRIPTION;noise
+COMFORTLINE;noise
+VITO;noise
+XL/FREETRACK;noise
+-VVTI;noise
+-DTEC;noise
+-D;noise
+06-;noise
+WEEKEND;noise
+F10;noise
+S-LINE/S6;noise
+ADVENTURE;noise
+G;noise
+ATE;noise
+ALTENATOR;noise
+BUMP.PLASTIC;noise
+
+# finish (продължение)
+PURPLE;finish
+RED-WHITE;finish
+
+# features (продължение)
+NIGHT;features
+ADAPTIVE;features
+DECORATIVE;features
+FOLDABLE.PRIMED;features
+
+# purpose (продължение)
+OUTLET;purpose
+EXIT;purpose
+GAS;purpose
+
+# variant (продължение)
+LENGTH;variant
+
+# typo (продължение)
+WIRES;typo;WIRE
+ΛAMΠA;typo;LAMP
+MOTOR-FAN;typo;MOTORFAN
+CHASSIS;variant
+
+# typo: слято FOGLAMP → FOG LAMP (за "REAR FOGLAMP" и подобни)
+FOGLAMP;typo;FOG LAMP
+# features: slash комбинации с FOG
+FOG/TURN;features;FOG-LAMP
+
+# base_type: B-PILLAR хифенирано → PILLAR
+B-PILLAR;base;PILLAR
+
+# base_type: CLIP - крепежен елемент
+CLIP;base;CLIP
+
+# HANDBRAKE - различни изписвания
+HANDBREAK;typo;HANDBRAKE
+HANDBRAKE;features;HANDBRAKE
+
+# multiword за CARGO AREA switch
+CARGO AREA;multiword;CARGO-AREA
+CARGO-AREA;features;CARGO-AREA
+BUMRER;typo;BUMPER
+AUXILLIARY;typo;AUXILIARY
+FROTN;typo;FRONT
+HEAD LAMPELECTRICAL;typo;HEAD LAMP
+RAGULATOR;typo;REGULATOR
+LICENSE;typo;LICENCE
+METAL.FENDER;typo;FENDER
+BUMP.REINFORCEMENT;typo;BUMPER REINFORCEMENT
+DR;typo;DOOR
+FROLICENCE;typo;FRONT LICENCE
+FOF;typo;FOG
+CORNEL;typo;CORNER
+FENRER;typo;FENDER
+FRNDER;typo;FENDER

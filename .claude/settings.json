@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sqlcmd query *)",
+      "Bash(ls \"/Volumes/sftpgo-storage/data/georgakopoulos/Parts\" 2>&1 | head -20; echo \"---count---\"; find \"/Volumes/sftpgo-storage/data/georgakopoulos/Parts\" -maxdepth 1 -type d 2>&1 | wc -l)",
+      "Read(//Volumes/sftpgo-storage/data/georgakopoulos/Parts/**)",
+      "Bash(npm -v)",
+      "Read(//private/tmp/**)",
+      "Bash(echo \"SELECT @@VERSION AS v;\")",
+      "Bash(sqlcmd -d \"GBG-BODYPARTS\" -i t.sql)",
+      "Bash(echo \"---exit:$?---\")"
+    ]
+  }
+}

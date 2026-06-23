@@ -1,0 +1,33 @@
+# Raw EDI data dumps (large, regenerated daily by import_gbg.py)
+*.txt
+gbg-data/zips/
+gbg-data/import/
+gbg-data/done/
+gbg-data/failed/
+gbg-data/app/logs/
+gbg-data/app/.venv/
+gbg-data/app/config.ini
+
+# NEXT export outputs (generated, large)
+TM_Article_Details_GBG.xlsx
+TM_Product_Groups_GBG.xlsx
+TM_References_GBG.xlsx
+TM_Attributes_GBG.xlsx
+
+# SQL Database Project build artifacts
+DatabaseProjectGBG-BODYPARTS/obj/
+DatabaseProjectGBG-BODYPARTS/bin/
+DatabaseProjectGBG-BUFFER/obj/
+DatabaseProjectGBG-BUFFER/bin/
+
+# Python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# Временни извлечения (виж DB_STATE_AND_GENART_PIPELINE.md т.6)
+extracts/
+
+# gbg-catalog (Next.js app) — its own .gitignore handles node_modules/.next/.env*.local
