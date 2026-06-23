@@ -20,3 +20,24 @@ export async function getBrands(): Promise<BrandSummary[]> {
     partsCount: row.parts_count,
   }));
 }
+
+export async function getModelsForBrand(brandName: string): Promise<ModelSummary[]> {
+  const pool = await getPool();
+  const result = await pool
+    .request()
+    .input('brandName', sql.NVarChar, brandName)
+    .query(`
+      SELECT a.model_code, a.model_raw, COUNT(DISTINCT a.product_id) AS parts_count
+      FROM dbo.applications a
+      JOIN dbo.brands b ON b.brand_id = a.brand_id
+      JOIN dbo.products p ON p.product_id = a.product_id AND p.is_active = 1
+      WHERE b.name_raw = @brandName
+      GROUP BY a.model_code, a.model_raw
+      ORDER BY a.model_raw
+    `);
+  return result.recordset.map((row) => ({
+    modelCode: row.model_code,
+    modelRaw: row.model_raw,
+    partsCount: row.parts_count,
+  }));
+}
