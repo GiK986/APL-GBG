@@ -14,7 +14,7 @@ export default async function SearchPage({
   const lid = getLanguageId(params.lid);
   const dict = getDictionary(lid);
   const query = params.q?.trim() ?? '';
-  const page = Number(params.page ?? '1') || 1;
+  const page = Math.max(1, Number(params.page ?? '1') || 1);
 
   const { items, total } = query
     ? await searchProducts(query, page)
