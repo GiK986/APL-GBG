@@ -1,6 +1,7 @@
 import { searchProducts } from '@/lib/search';
 import { PAGE_SIZE } from '@/lib/constants';
 import { getDictionary, getLanguageId } from '@/lib/i18n';
+import { parsePage } from '@/lib/pagination';
 import { ResultCard } from '@/components/ResultCard';
 import { Pagination } from '@/components/Pagination';
 import { SearchBox } from '@/components/SearchBox';
@@ -14,7 +15,7 @@ export default async function SearchPage({
   const lid = getLanguageId(params.lid);
   const dict = getDictionary(lid);
   const query = params.q?.trim() ?? '';
-  const page = Math.max(1, Number(params.page ?? '1') || 1);
+  const page = parsePage(params.page);
 
   const { items, total } = query
     ? await searchProducts(query, page)

@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# gbg-catalog
 
-## Getting Started
+Local web catalog for `GBG-BODYPARTS` parts: search, brand → model → parts browse, and part
+detail pages. This is an internal MVP tool, currently local-only. The eventual goal is to embed
+this as a TM1 Next Catalogue module (see the postMessage protocol note below); for now it just
+runs as a standalone Next.js app against the live `GBG-BODYPARTS` database.
 
-First, run the development server:
+## Setup
 
 ```bash
+npm install
+cp .env.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`.env.example` already contains real, working DB credentials for this internal tool. Once copied
+to `.env.local`, that file must stay gitignored (it already is — see `.gitignore`) and should
+never be committed.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Requires a live database + photo mirror
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This app needs network access to the `GBG-BODYPARTS` SQL Server, configured via `DB_HOST`,
+`DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME` in `.env.local`. There is no offline/mock mode —
+pages that hit the DB will fail without connectivity.
 
-## Learn More
+It also needs a local mirror of part photos at the path set by `PARTS_DIR` in `.env.local`
+(currently an SFTP-mounted volume). Part images are resolved from that directory by barcode.
 
-To learn more about Next.js, take a look at the following resources:
+## Language (`lid` query param)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The `lid` query param controls UI language: `32` = Bulgarian (default), `4` = English. Both
+language modes currently show `products.eng_descr` for the part description — `gr_descr`
+(Greek) is not used anywhere yet.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## "Add to basket" — TM1 Next Catalogue protocol
 
-## Deploy on Vercel
+The "Add" button on each part sends a `postMessage` payload matching the TM1 Next Catalogue
+`addPartsToBasket` protocol, so this app can eventually run embedded as a Next Catalogue module.
+See [`../NEXT_CATALOGUE_POSTMESSAGE_BASKET.md`](../NEXT_CATALOGUE_POSTMESSAGE_BASKET.md) for the
+full reverse-engineered protocol documentation.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`targetOrigin` for the `postMessage` call is controlled by `NEXT_PUBLIC_TM1_ORIGIN` and defaults
+to `*` for local testing.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## One-time DB migration (only if pointing at a fresh `GBG-BODYPARTS` copy)
+
+If you're setting this up against a fresh copy of `GBG-BODYPARTS` rather than the live database
+this app currently points at, you'll need to apply the `sale_price` backfill and the
+`usp_sync_from_buffer` procedure update described in
+[`../docs/superpowers/plans/2026-06-23-gbg-catalog-mvp.md`](../docs/superpowers/plans/2026-06-23-gbg-catalog-mvp.md),
+Task 1. This has already been applied to the live database this app currently points at, so it's
+only relevant when pointing at a different or fresh database.
+
+## Tests / type-check
+
+```bash
+npm run test        # vitest
+npx tsc --noEmit     # type-check
+```

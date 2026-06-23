@@ -1,6 +1,7 @@
 import { getPartsForModel } from '@/lib/browse';
 import { PAGE_SIZE } from '@/lib/constants';
 import { getLanguageId } from '@/lib/i18n';
+import { parsePage } from '@/lib/pagination';
 import { ResultCard } from '@/components/ResultCard';
 import { Pagination } from '@/components/Pagination';
 
@@ -15,7 +16,7 @@ export default async function ModelPartsPage({
   const sp = await searchParams;
   const lid = getLanguageId(sp.lid);
   const brandName = decodeURIComponent(brand);
-  const page = Number(sp.page ?? '1') || 1;
+  const page = parsePage(sp.page);
 
   const { items, total } = await getPartsForModel(brandName, modelCode, page);
 
