@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getModelsForBrand } from '@/lib/browse';
 import { getDictionary, getLanguageId } from '@/lib/i18n';
+import { Breadcrumb } from '@/components/Breadcrumb';
 
 export default async function ModelsPage({
   params,
@@ -17,21 +18,22 @@ export default async function ModelsPage({
   const models = await getModelsForBrand(brandName);
 
   return (
-    <main style={{ padding: 24, maxWidth: 800, margin: '0 auto' }}>
-      <h1>
-        {brandName} — {dict.models}
-      </h1>
-      <ul>
+    <main className="page">
+      <Breadcrumb items={[{ label: brandName, href: `/brands?lid=${lid}` }]} current={dict.models} />
+      <div className="chip-grid">
         {models.map((model) => (
-          <li key={model.modelCode}>
-            <Link
-              href={`/brands/${encodeURIComponent(brandName)}/models/${model.modelCode}/parts?lid=${lid}`}
-            >
-              {model.modelRaw} ({model.partsCount} {dict.parts})
-            </Link>
-          </li>
+          <Link
+            key={model.modelCode}
+            href={`/brands/${encodeURIComponent(brandName)}/models/${model.modelCode}/parts?lid=${lid}`}
+            className="chip-link"
+          >
+            {model.modelRaw}
+            <span className="chip-link__count">
+              {model.partsCount} {dict.parts}
+            </span>
+          </Link>
         ))}
-      </ul>
+      </div>
     </main>
   );
 }

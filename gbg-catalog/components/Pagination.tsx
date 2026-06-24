@@ -22,12 +22,20 @@ export function Pagination({
   }
 
   return (
-    <div style={{ display: 'flex', gap: 8, marginTop: 16 }}>
-      {page > 1 && <Link href={hrefFor(page - 1)}>← Prev</Link>}
-      <span>
+    <div className="pagination">
+      {page > 1 && (
+        <Link href={hrefFor(page - 1)} className="btn btn-outline">
+          ← Prev
+        </Link>
+      )}
+      <span className="pagination__page">
         {page} / {totalPages}
       </span>
-      {page < totalPages && <Link href={hrefFor(page + 1)}>Next →</Link>}
+      {page < totalPages && (
+        <Link href={hrefFor(page + 1)} className="btn btn-outline">
+          Next →
+        </Link>
+      )}
     </div>
   );
 }

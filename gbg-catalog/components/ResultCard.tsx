@@ -5,22 +5,26 @@ import { AddToBasketButton } from './AddToBasketButton';
 
 export function ResultCard({ product, lid }: { product: ProductSummary; lid: string }) {
   return (
-    <div style={{ display: 'flex', gap: 16, border: '1px solid #ddd', padding: 12, marginBottom: 8 }}>
+    <div className="result-card">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={`/img/${product.barcode}`}
         alt={product.barcode}
-        width={80}
-        height={80}
-        style={{ objectFit: 'contain' }}
+        width={64}
+        height={64}
+        className="result-card__image"
       />
-      <div style={{ flex: 1 }}>
-        <Link href={`/part/${product.barcode}?lid=${lid}`}>
-          <strong>{product.barcode}</strong> — {product.description}
+      <div className="result-card__body">
+        <Link href={`/part/${product.barcode}?lid=${lid}`} className="result-card__title">
+          {product.barcode} — {product.description}
         </Link>
-        <div>{product.categoryRaw}</div>
+        {product.categoryRaw && <span className="result-card__category">{product.categoryRaw}</span>}
         <StockIndicator stockAth={product.stockAth} stockThe={product.stockThe} lid={lid} />
-        <div>{product.salePrice != null ? `${product.salePrice.toFixed(2)} €` : '—'}</div>
+      </div>
+      <div
+        className={`result-card__price ${product.salePrice == null ? 'result-card__price--empty' : ''}`}
+      >
+        {product.salePrice != null ? `${product.salePrice.toFixed(2)} €` : '—'}
       </div>
       <AddToBasketButton barcode={product.barcode} lid={lid} />
     </div>

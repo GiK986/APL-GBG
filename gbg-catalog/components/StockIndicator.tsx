@@ -1,5 +1,14 @@
 import { getDictionary } from '@/lib/i18n';
 
+function Pill({ inStock, label }: { inStock: boolean; label: string }) {
+  return (
+    <span className={`stock-pill ${inStock ? 'stock-pill--in' : 'stock-pill--out'}`}>
+      <span className="stock-pill__dot" />
+      {label}
+    </span>
+  );
+}
+
 export function StockIndicator({
   stockAth,
   stockThe,
@@ -11,9 +20,9 @@ export function StockIndicator({
 }) {
   const dict = getDictionary(lid);
   return (
-    <span style={{ display: 'flex', gap: 8, fontSize: 12 }}>
-      <span style={{ color: stockAth ? 'green' : 'crimson' }}>● {dict.inStockAthens}</span>
-      <span style={{ color: stockThe ? 'green' : 'crimson' }}>● {dict.inStockThessaloniki}</span>
+    <span className="stock-row">
+      <Pill inStock={stockAth} label={dict.inStockAthens} />
+      <Pill inStock={stockThe} label={dict.inStockThessaloniki} />
     </span>
   );
 }

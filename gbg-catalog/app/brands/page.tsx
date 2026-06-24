@@ -13,17 +13,23 @@ export default async function BrandsPage({
   const brands = await getBrands();
 
   return (
-    <main style={{ padding: 24, maxWidth: 800, margin: '0 auto' }}>
-      <h1>{dict.brands}</h1>
-      <ul>
+    <main className="page">
+      <h1 className="page-title">{dict.brands}</h1>
+      <div className="brand-grid">
         {brands.map((brand) => (
-          <li key={brand.brandId}>
-            <Link href={`/brands/${encodeURIComponent(brand.nameRaw)}/models?lid=${lid}`}>
-              {brand.nameRaw} ({brand.partsCount})
-            </Link>
-          </li>
+          <Link
+            key={brand.brandId}
+            href={`/brands/${encodeURIComponent(brand.nameRaw)}/models?lid=${lid}`}
+            className="brand-card"
+          >
+            <span className="brand-card__badge">{brand.nameRaw.slice(0, 1)}</span>
+            <span className="brand-card__name">{brand.nameRaw}</span>
+            <span className="brand-card__count">
+              {brand.partsCount} {dict.parts}
+            </span>
+          </Link>
         ))}
-      </ul>
+      </div>
     </main>
   );
 }

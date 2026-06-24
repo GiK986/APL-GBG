@@ -22,9 +22,11 @@ export default async function SearchPage({
     : { items: [], total: 0 };
 
   return (
-    <main style={{ padding: 24, maxWidth: 800, margin: '0 auto' }}>
-      <SearchBox lid={lid} initialQuery={query} />
-      {items.length === 0 && <p>{dict.noResults}</p>}
+    <main className="page">
+      <div className="panel">
+        <SearchBox lid={lid} initialQuery={query} />
+      </div>
+      {items.length === 0 && <p className="empty-state">{dict.noResults}</p>}
       {items.map((item) => (
         <ResultCard key={item.productId} product={item} lid={lid} />
       ))}

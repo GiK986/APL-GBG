@@ -19,8 +19,8 @@ export function AddToBasketButton({ barcode, lid }: { barcode: string; lid: stri
   }
 
   return (
-    <button onClick={handleClick} type="button">
-      {added ? dict.addedToBasket : dict.addToBasket}
+    <button onClick={handleClick} type="button" className="btn btn-primary" disabled={added}>
+      {added ? `✓ ${dict.addedToBasket}` : dict.addToBasket}
     </button>
   );
 }

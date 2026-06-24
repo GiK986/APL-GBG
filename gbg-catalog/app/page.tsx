@@ -12,12 +12,16 @@ export default async function HomePage({
   const dict = getDictionary(lid);
 
   return (
-    <main style={{ padding: 24, maxWidth: 800, margin: '0 auto' }}>
-      <h1>GBG Catalog</h1>
-      <SearchBox lid={lid} />
-      <p>
-        <Link href={`/brands?lid=${lid}`}>{dict.brands}</Link>
-      </p>
+    <main className="page">
+      <h1 className="page-title">Каталог на артикули</h1>
+      <div className="panel">
+        <SearchBox lid={lid} />
+      </div>
+      <div className="panel">
+        <Link href={`/brands?lid=${lid}`} className="btn btn-outline">
+          {dict.brands} →
+        </Link>
+      </div>
     </main>
   );
 }
