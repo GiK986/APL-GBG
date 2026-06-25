@@ -16,6 +16,9 @@
       <DatabaseVariableLiteralValue>GBG-BUFFER</DatabaseVariableLiteralValue>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Build Remove="Migrations\**" />
+  </ItemGroup>
   <Target Name="BeforeBuild">
     <Delete Files="$(BaseIntermediateOutputPath)\project.assets.json" />
   </Target>

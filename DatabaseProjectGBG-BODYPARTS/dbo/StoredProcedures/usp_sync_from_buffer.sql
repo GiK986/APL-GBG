@@ -6,13 +6,16 @@
 --
 -- Логика:
 --   1. brands      -> добавя нови марки
---   2. products    -> MERGE по barcode (запазва product_id, sale_price, is_active при ръчна промяна)
---   3. наличности  -> от buffer.stock по barcode
---   4. genart_id   -> от map_category_genart
---   5. applications / oem_numbers / cross_refs -> пълно презареждане (derived)
+--   2. models      -> MERGE по (brand_id, model_code); regex извлича model_group/
+--                      model_name/constr_year_from/to от catalog.model. НЕ се
+--                      truncate-ва — model_id остава стабилен между синхронизациите.
+--   3. products    -> MERGE по barcode (запазва product_id, sale_price, is_active при ръчна промяна)
+--   4. наличности  -> от buffer.stock по barcode
+--   5. genart_id   -> от map_category_genart
+--   6. applications / oem_numbers / cross_refs -> пълно презареждане (derived)
 -- Всичко в една транзакция с rollback при грешка.
 -- =============================================================================
-CREATE OR ALTER PROCEDURE [dbo].[usp_sync_from_buffer]
+CREATE PROCEDURE [dbo].[usp_sync_from_buffer]
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -32,7 +35,50 @@ BEGIN
           AND NOT EXISTS (SELECT 1 FROM dbo.brands b WHERE b.name_raw = c.brand)
           ORDER BY c.brand;
 
-        -- 2) products: представителен ред на barcode  --------
+        -- 2) models: MERGE по (brand_id, model_code) ---------------------------
+        --    model_group/model_name/constr_year_* извлечени чрез regex от
+        --    catalog.model (формат "БРАНД МОДЕЛ ГГГГ-ГГГГ (шаси)"). НЕ delete-ва
+        --    при липса в buffer-а (като brands) — стар модел просто спира да се
+        --    показва, защото няма активни applications/products към него.
+        ;WITH src AS (
+            SELECT DISTINCT
+                b.brand_id,
+                c.model_code,
+                c.model AS model_raw,
+                LTRIM(RTRIM(REGEXP_SUBSTR(REPLACE(c.model, c.brand, ''),
+                    '(.*)[0-9]{4}-[0-9]{0,4}', 1, 1, '', 1))) AS model_group_raw,
+                LTRIM(RTRIM(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(c.model, c.brand, ''),
+                    '[0-9]{4}-[0-9]{0,4}', ''), '  ', ' '), '  ', ' '))) AS model_name_raw,
+                REGEXP_SUBSTR(c.model, '[0-9]{4}-[0-9]{0,4}') AS year_match
+            FROM [GBG-BUFFER].dbo.[catalog] c
+            JOIN dbo.brands b ON b.name_raw = c.brand
+            WHERE c.model_code NOT IN ('0007', '0039', '0056', '0064', '0227', '0928', '0401')
+        ),
+        derived AS (
+            SELECT
+                brand_id, model_code, model_raw,
+                COALESCE(NULLIF(model_group_raw, N''), model_name_raw) AS model_group,
+                model_name_raw AS model_name,
+                TRY_CAST(LEFT(year_match, 4) AS SMALLINT) AS constr_year_from,
+                CASE WHEN LEN(year_match) > 5
+                     THEN TRY_CAST(SUBSTRING(year_match, 6, 4) AS SMALLINT)
+                     ELSE NULL END AS constr_year_to
+            FROM src
+        )
+        MERGE dbo.models AS tgt
+        USING derived AS s
+            ON tgt.brand_id = s.brand_id AND tgt.model_code = s.model_code
+        WHEN MATCHED THEN UPDATE SET
+            model_raw        = s.model_raw,
+            model_group      = s.model_group,
+            model_name       = s.model_name,
+            constr_year_from = s.constr_year_from,
+            constr_year_to   = s.constr_year_to
+        WHEN NOT MATCHED BY TARGET THEN
+            INSERT (brand_id, model_code, model_raw, model_group, model_name, constr_year_from, constr_year_to)
+            VALUES (s.brand_id, s.model_code, s.model_raw, s.model_group, s.model_name, s.constr_year_from, s.constr_year_to);
+
+        -- 3) products: представителен ред на barcode  --------
         ;WITH rep AS (
             SELECT
                 c.barcode, c.eng_descr, c.gr_descr, c.category, c.side,
@@ -67,7 +113,7 @@ BEGIN
         WHEN NOT MATCHED BY SOURCE AND tgt.is_active = 1 THEN
             UPDATE SET is_active = 0, updated_at = @now;
 
-        -- 3) Наличности от buffer.stock (по barcode) --------------------------
+        -- 4) Наличности от buffer.stock (по barcode) --------------------------
         UPDATE p SET
             p.stock_ath = COALESCE(s.ath, 0),
             p.stock_the = COALESCE(s.the, 0)
@@ -80,7 +126,7 @@ BEGIN
             GROUP BY item_code
         ) s ON s.item_code = p.barcode;
 
-        -- 4) genart_id: ръчно > артикулно правило > категория -----------------
+        -- 5) genart_id: ръчно > артикулно правило > категория -----------------
         --    map_genart_manual   (по barcode)            - ръчни решения
         --    map_genart_article  (категория+descr+side)  - от article_genart.py
         --    map_category_genart (по категория)          - fallback за нови описания
@@ -97,7 +143,7 @@ BEGIN
                                            AND ma.side         = ISNULL(p.side, '')
         LEFT JOIN dbo.map_category_genart mc ON mc.category_raw = p.category_raw;
 
-        -- 4b) опашка за преглед: активни части без ред в артикулния мапинг ----
+        -- 5b) опашка за преглед: активни части без ред в артикулния мапинг ----
         --     (включително тези, спасени от категорийния fallback - те също
         --      чакат правило, за да получат проверен артикулен GenArt)
         MERGE dbo.genart_unmapped AS tgt
@@ -126,16 +172,17 @@ BEGIN
             VALUES (s.category_raw, s.eng_descr, s.side, s.parts_count, @now, @now)
         WHEN NOT MATCHED BY SOURCE THEN DELETE;
 
-        -- 5a) applications: пълно презареждане --------------------------------
+        -- 6a) applications: пълно презареждане --------------------------------
         TRUNCATE TABLE dbo.applications;
-        INSERT INTO dbo.applications (product_id, item_code, brand_id, model_raw, model_code)
-        SELECT p.product_id, c.item_code, b.brand_id, c.model, c.model_code
+        INSERT INTO dbo.applications (product_id, item_code, model_id)
+        SELECT p.product_id, c.item_code, m.model_id
         FROM [GBG-BUFFER].dbo.[catalog] c
         JOIN dbo.products p ON p.barcode = c.barcode
         LEFT JOIN dbo.brands b ON b.name_raw = c.brand
+        LEFT JOIN dbo.models m ON m.brand_id = b.brand_id AND m.model_code = c.model_code
         WHERE c.model_code NOT IN ('0007', '0039', '0056', '0064', '0227', '0928', '0401');
 
-        -- 5b) oem_numbers: пълно презареждане --------------------------------
+        -- 6b) oem_numbers: пълно презареждане --------------------------------
         -- OEM в Genuine е по item_code (per-vehicle). Затова джойн през
         -- catalog.item_code -> barcode (product_id) + brand (tecdoc_man_no).
         -- Така се пазят ВСИЧКИ OE и всеки носи правилния ManNo за Reference Brand.
@@ -153,7 +200,7 @@ BEGIN
         JOIN dbo.products p     ON p.barcode   = c.barcode
         LEFT JOIN dbo.brands b  ON b.name_raw  = c.brand;
 
-        -- 5c) cross_refs: пълно презареждане ---------------------------------
+        -- 6c) cross_refs: пълно презареждане ---------------------------------
         TRUNCATE TABLE dbo.cross_refs;
         INSERT INTO dbo.cross_refs (product_id, basic_code, similar_code)
         SELECT p.product_id, r.basic_code, r.similar_code
