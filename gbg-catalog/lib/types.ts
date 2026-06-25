@@ -3,6 +3,7 @@ export interface ProductSummary {
   barcode: string;
   description: string;
   categoryRaw: string | null;
+  side: string | null;
   salePrice: number | null;
   stockAth: boolean;
   stockThe: boolean;
@@ -35,8 +36,27 @@ export interface BrandSummary {
   partsCount: number;
 }
 
-export interface ModelSummary {
+export interface ModelGroupSummary {
+  modelGroup: string;
+  partsCount: number;
+}
+
+export interface ModelCardSummary {
   modelCode: string;
-  modelRaw: string;
+  modelName: string;
+  constrYearFrom: number | null;
+  constrYearTo: number | null;
+  partsCount: number;
+}
+
+export interface ModelDetail {
+  modelGroup: string;
+  modelName: string;
+  constrYearFrom: number | null;
+  constrYearTo: number | null;
+}
+
+export interface CategorySummary {
+  category: string;
   partsCount: number;
 }

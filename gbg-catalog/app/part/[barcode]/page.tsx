@@ -33,7 +33,11 @@ export default async function PartDetailPage({
           <div className={`part-price ${part.salePrice == null ? 'part-price--empty' : ''}`}>
             {part.salePrice != null ? `${part.salePrice.toFixed(2)} €` : '—'}
           </div>
-          <AddToBasketButton barcode={part.barcode} lid={lid} />
+          <AddToBasketButton
+            barcode={part.barcode}
+            lid={lid}
+            inStock={part.stockAth || part.stockThe}
+          />
         </div>
       </div>
 

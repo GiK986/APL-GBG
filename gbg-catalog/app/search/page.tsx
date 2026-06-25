@@ -1,42 +1,37 @@
 import { searchProducts } from '@/lib/search';
-import { PAGE_SIZE } from '@/lib/constants';
 import { getDictionary, getLanguageId } from '@/lib/i18n';
-import { parsePage } from '@/lib/pagination';
-import { ResultCard } from '@/components/ResultCard';
-import { Pagination } from '@/components/Pagination';
+import { InfinitePartsList } from '@/components/InfinitePartsList';
 import { SearchBox } from '@/components/SearchBox';
 
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; lid?: string; page?: string }>;
+  searchParams: Promise<{ q?: string; lid?: string }>;
 }) {
   const params = await searchParams;
   const lid = getLanguageId(params.lid);
   const dict = getDictionary(lid);
   const query = params.q?.trim() ?? '';
-  const page = parsePage(params.page);
 
-  const { items, total } = query
-    ? await searchProducts(query, page)
-    : { items: [], total: 0 };
+  const { items, total } = query ? await searchProducts(query, 1) : { items: [], total: 0 };
 
   return (
     <main className="page">
       <div className="panel">
         <SearchBox lid={lid} initialQuery={query} />
       </div>
-      {items.length === 0 && <p className="empty-state">{dict.noResults}</p>}
-      {items.map((item) => (
-        <ResultCard key={item.productId} product={item} lid={lid} />
-      ))}
-      {items.length > 0 && (
-        <Pagination
-          page={page}
+      {items.length === 0 ? (
+        <p className="empty-state">{dict.noResults}</p>
+      ) : (
+        <InfinitePartsList
+          key={query}
+          initialItems={items}
           total={total}
-          pageSize={PAGE_SIZE}
-          basePath="/search"
-          extraParams={{ q: query, lid }}
+          lid={lid}
+          fetchUrl="/api/search"
+          fetchParams={{ q: query }}
+          uncategorizedLabel={dict.uncategorized}
+          loadingLabel={dict.loadingMore}
         />
       )}
     </main>

@@ -9,7 +9,7 @@ export async function getPartDetail(barcode: string): Promise<PartDetail | null>
     .request()
     .input('barcode', sql.NVarChar, barcode)
     .query(`
-      SELECT product_id, barcode, eng_descr, category_raw, sale_price, stock_ath, stock_the
+      SELECT product_id, barcode, eng_descr, category_raw, side, sale_price, stock_ath, stock_the
       FROM dbo.products
       WHERE barcode = @barcode AND is_active = 1
     `);
@@ -31,11 +31,12 @@ export async function getPartDetail(barcode: string): Promise<PartDetail | null>
       ORDER BY similar_code
     `),
     pool.request().input('productId', sql.Int, productRow.product_id).query(`
-      SELECT DISTINCT b.name_raw AS brand_name, a.model_raw, a.model_code
+      SELECT DISTINCT b.name_raw AS brand_name, m.model_raw, m.model_code
       FROM dbo.applications a
-      JOIN dbo.brands b ON b.brand_id = a.brand_id
+      JOIN dbo.models m ON m.model_id = a.model_id
+      JOIN dbo.brands b ON b.brand_id = m.brand_id
       WHERE a.product_id = @productId
-      ORDER BY b.name_raw, a.model_raw
+      ORDER BY b.name_raw, m.model_raw
     `),
   ]);
 
@@ -44,6 +45,7 @@ export async function getPartDetail(barcode: string): Promise<PartDetail | null>
     barcode: productRow.barcode,
     description: productRow.eng_descr ?? '',
     categoryRaw: productRow.category_raw,
+    side: productRow.side?.trim() ?? null,
     salePrice: productRow.sale_price,
     stockAth: Boolean(productRow.stock_ath),
     stockThe: Boolean(productRow.stock_the),

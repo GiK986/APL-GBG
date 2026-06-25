@@ -16,3 +16,23 @@ export function findImagePath(barcode: string): string | null {
   const fullPath = resolveImagePath(partsDir, barcode);
   return existsSync(fullPath) ? fullPath : null;
 }
+
+const MODEL_IMAGE_EXTENSIONS = ['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG'];
+
+export function resolveModelImagePath(modelsDir: string, modelCode: string): string | null {
+  for (const ext of MODEL_IMAGE_EXTENSIONS) {
+    const candidate = path.join(modelsDir, `${modelCode}.${ext}`);
+    if (existsSync(candidate)) return candidate;
+  }
+  return null;
+}
+
+export function findModelImagePath(modelCode: string): string | null {
+  const modelsDir = process.env.MODEL_IMAGES_DIR;
+  if (!modelsDir) return null;
+  // Reject path-traversal attempts (.. or path separators)
+  if (modelCode.includes('..') || modelCode.includes('/') || modelCode.includes('\\')) {
+    return null;
+  }
+  return resolveModelImagePath(modelsDir, modelCode);
+}

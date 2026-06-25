@@ -1,5 +1,6 @@
-import Link from 'next/link';
+import { BrandGrid } from '@/components/BrandGrid';
 import { SearchBox } from '@/components/SearchBox';
+import { getBrands } from '@/lib/browse';
 import { getDictionary, getLanguageId } from '@/lib/i18n';
 
 export default async function HomePage({
@@ -10,18 +11,15 @@ export default async function HomePage({
   const params = await searchParams;
   const lid = getLanguageId(params.lid);
   const dict = getDictionary(lid);
+  const brands = await getBrands();
 
   return (
     <main className="page">
-      <h1 className="page-title">Каталог на артикули</h1>
       <div className="panel">
         <SearchBox lid={lid} />
       </div>
-      <div className="panel">
-        <Link href={`/brands?lid=${lid}`} className="btn btn-outline">
-          {dict.brands} →
-        </Link>
-      </div>
+      <h2 className="page-subtitle">{dict.brands}</h2>
+      <BrandGrid brands={brands} lid={lid} partsLabel={dict.parts} />
     </main>
   );
 }

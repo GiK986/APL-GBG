@@ -5,7 +5,15 @@ import { getDictionary } from '@/lib/i18n';
 
 const TM1_ORIGIN = process.env.NEXT_PUBLIC_TM1_ORIGIN ?? '*';
 
-export function AddToBasketButton({ barcode, lid }: { barcode: string; lid: string }) {
+export function AddToBasketButton({
+  barcode,
+  lid,
+  inStock,
+}: {
+  barcode: string;
+  lid: string;
+  inStock: boolean;
+}) {
   const dict = getDictionary(lid);
   const [added, setAdded] = useState(false);
 
@@ -16,6 +24,14 @@ export function AddToBasketButton({ barcode, lid }: { barcode: string; lid: stri
     window.parent.postMessage(payload, TM1_ORIGIN);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
+  }
+
+  if (!inStock) {
+    return (
+      <button type="button" className="btn btn-primary btn-primary--unavailable" disabled>
+        {dict.addToBasket}
+      </button>
+    );
   }
 
   return (

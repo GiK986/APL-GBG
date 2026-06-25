@@ -32,9 +32,10 @@ const SEARCH_WHERE = `
     )
     OR EXISTS (
       SELECT 1 FROM dbo.applications a
-      JOIN dbo.brands b ON b.brand_id = a.brand_id
+      JOIN dbo.models m ON m.model_id = a.model_id
+      JOIN dbo.brands b ON b.brand_id = m.brand_id
       WHERE a.product_id = p.product_id
-        AND (a.model_raw LIKE @like OR b.name_raw LIKE @like)
+        AND (m.model_raw LIKE @like OR b.name_raw LIKE @like)
     )
   )
 `;
@@ -60,7 +61,7 @@ export async function searchProducts(rawQuery: string, page: number): Promise<Se
     .input('offset', sql.Int, offset)
     .input('pageSize', sql.Int, PAGE_SIZE)
     .query(`
-      SELECT p.product_id, p.barcode, p.eng_descr, p.category_raw,
+      SELECT p.product_id, p.barcode, p.eng_descr, p.category_raw, p.side,
              p.sale_price, p.stock_ath, p.stock_the,
              CASE
                WHEN p.barcode = @exact THEN 0
@@ -73,7 +74,7 @@ export async function searchProducts(rawQuery: string, page: number): Promise<Se
              END AS rank
       FROM dbo.products p
       WHERE ${SEARCH_WHERE}
-      ORDER BY rank, p.barcode
+      ORDER BY rank, CASE WHEN p.category_raw IS NULL THEN 1 ELSE 0 END, p.category_raw, p.barcode
       OFFSET @offset ROWS FETCH NEXT @pageSize ROWS ONLY
     `);
 
@@ -82,6 +83,7 @@ export async function searchProducts(rawQuery: string, page: number): Promise<Se
     barcode: row.barcode,
     description: row.eng_descr ?? '',
     categoryRaw: row.category_raw,
+    side: row.side?.trim() ?? null,
     salePrice: row.sale_price,
     stockAth: Boolean(row.stock_ath),
     stockThe: Boolean(row.stock_the),

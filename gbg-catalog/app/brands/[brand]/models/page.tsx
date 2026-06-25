@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { getModelsForBrand } from '@/lib/browse';
+import { getModelGroupsForBrand } from '@/lib/browse';
 import { getDictionary, getLanguageId } from '@/lib/i18n';
 import { Breadcrumb } from '@/components/Breadcrumb';
 
-export default async function ModelsPage({
+export default async function ModelGroupsPage({
   params,
   searchParams,
 }: {
@@ -15,21 +15,21 @@ export default async function ModelsPage({
   const lid = getLanguageId(sp.lid);
   const dict = getDictionary(lid);
   const brandName = decodeURIComponent(brand);
-  const models = await getModelsForBrand(brandName);
+  const groups = await getModelGroupsForBrand(brandName);
 
   return (
     <main className="page">
-      <Breadcrumb items={[{ label: brandName, href: `/brands?lid=${lid}` }]} current={dict.models} />
+      <Breadcrumb items={[{ label: brandName, href: `/?lid=${lid}` }]} current={dict.series} />
       <div className="chip-grid">
-        {models.map((model) => (
+        {groups.map((group) => (
           <Link
-            key={model.modelCode}
-            href={`/brands/${encodeURIComponent(brandName)}/models/${model.modelCode}/parts?lid=${lid}`}
+            key={group.modelGroup}
+            href={`/brands/${encodeURIComponent(brandName)}/models/${encodeURIComponent(group.modelGroup)}?lid=${lid}`}
             className="chip-link"
           >
-            {model.modelRaw}
+            {group.modelGroup}
             <span className="chip-link__count">
-              {model.partsCount} {dict.parts}
+              {group.partsCount} {dict.parts}
             </span>
           </Link>
         ))}
