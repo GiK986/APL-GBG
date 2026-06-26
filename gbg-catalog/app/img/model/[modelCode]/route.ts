@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createReadStream } from 'node:fs';
+import path from 'node:path';
 import { Readable } from 'node:stream';
 import { findModelImagePath } from '@/lib/images';
 
@@ -10,16 +11,19 @@ export async function GET(
   { params }: { params: Promise<{ modelCode: string }> },
 ) {
   const { modelCode } = await params;
-  const filePath = findModelImagePath(modelCode);
+  const realPath = findModelImagePath(modelCode);
 
-  if (!filePath) {
-    return NextResponse.redirect(new URL('/placeholder-model.svg', request.url));
+  if (!realPath) {
+    const stream = Readable.toWeb(
+      createReadStream(path.join(process.cwd(), 'public/placeholder-model.svg')),
+    ) as ReadableStream;
+    return new NextResponse(stream, { headers: { 'Content-Type': 'image/svg+xml' } });
   }
 
-  const stream = Readable.toWeb(createReadStream(filePath)) as ReadableStream;
+  const stream = Readable.toWeb(createReadStream(realPath)) as ReadableStream;
   return new NextResponse(stream, {
     headers: {
-      'Content-Type': filePath.toLowerCase().endsWith('.png') ? 'image/png' : 'image/jpeg',
+      'Content-Type': realPath.toLowerCase().endsWith('.png') ? 'image/png' : 'image/jpeg',
       'Cache-Control': 'public, max-age=86400',
     },
   });
