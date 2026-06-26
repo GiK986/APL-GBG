@@ -1,6 +1,8 @@
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 
+const PART_IMAGE_EXTENSIONS = ['jpg', 'JPG', 'jpeg', 'JPEG'];
+
 export function resolveImagePath(partsDir: string, barcode: string): string {
   const prefix = barcode.slice(0, 4);
   return path.join(partsDir, prefix, `${barcode}.jpg`);
@@ -13,8 +15,12 @@ export function findImagePath(barcode: string): string | null {
   if (barcode.includes('..') || barcode.includes('/') || barcode.includes('\\')) {
     return null;
   }
-  const fullPath = resolveImagePath(partsDir, barcode);
-  return existsSync(fullPath) ? fullPath : null;
+  const prefix = barcode.slice(0, 4);
+  for (const ext of PART_IMAGE_EXTENSIONS) {
+    const candidate = path.join(partsDir, prefix, `${barcode}.${ext}`);
+    if (existsSync(candidate)) return candidate;
+  }
+  return null;
 }
 
 const MODEL_IMAGE_EXTENSIONS = ['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG'];
