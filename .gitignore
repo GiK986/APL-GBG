@@ -32,3 +32,8 @@ extracts/
 
 # gbg-catalog (Next.js app) — its own .gitignore handles node_modules/.next/.env*.local
 .superpowers/
+
+# Editor
+.vscode/
+.claude/
+/docs/
