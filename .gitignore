@@ -25,6 +25,9 @@ extracts/
 .claude/
 docs/
 
+# prod 
+docker-compose.prod.yml
+
 # No longer version-controlled in this repo
 gbg-data/
 gbg-genart/

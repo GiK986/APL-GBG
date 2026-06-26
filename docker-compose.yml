@@ -1,0 +1,14 @@
+services:
+  gbg-catalog:
+    build:
+      context: ./gbg-catalog
+    env_file:
+      - ./gbg-catalog/.env.local
+    ports:
+      - "3000:3000"
+    # PARTS_DIR / MODEL_IMAGES_DIR below must match the values in .env.local exactly
+    # (same path inside the container as on the host).
+    volumes:
+      - /Volumes/sftpgo-storage/data/georgakopoulos/Parts:/Volumes/sftpgo-storage/data/georgakopoulos/Parts:ro
+      - /Volumes/sftpgo-storage/data/georgakopoulos/EFAR:/Volumes/sftpgo-storage/data/georgakopoulos/EFAR:ro
+    restart: unless-stopped
