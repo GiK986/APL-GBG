@@ -4,7 +4,7 @@ export const DEFAULT_LID: LanguageId = '32';
 
 const DICTIONARIES = {
   '32': {
-    searchPlaceholder: 'Търси по баркод, OE номер или описание...',
+    searchPlaceholder: 'Търси по OEM номер или артикулен номер...',
     searchButton: 'Търси',
     addToBasket: 'Добави',
     addedToBasket: 'Добавено',
@@ -31,7 +31,7 @@ const DICTIONARIES = {
     priceLabel: 'Цена на артикул',
   },
   '4': {
-    searchPlaceholder: 'Search by barcode, OE number or description...',
+    searchPlaceholder: 'Search by OEM number or item number...',
     searchButton: 'Search',
     addToBasket: 'Add',
     addedToBasket: 'Added',
