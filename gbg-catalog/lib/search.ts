@@ -23,19 +23,10 @@ const SEARCH_WHERE = `
   p.is_active = 1
   AND (
     p.barcode LIKE @like
-    OR p.eng_descr LIKE @like
-    OR p.gr_descr LIKE @like
     OR EXISTS (
       SELECT 1 FROM dbo.oem_numbers o
       WHERE o.product_id = p.product_id
         AND (o.oem_code LIKE @like OR o.net_oem_code LIKE @like)
-    )
-    OR EXISTS (
-      SELECT 1 FROM dbo.applications a
-      JOIN dbo.models m ON m.model_id = a.model_id
-      JOIN dbo.brands b ON b.brand_id = m.brand_id
-      WHERE a.product_id = p.product_id
-        AND (m.model_raw LIKE @like OR b.name_raw LIKE @like)
     )
   )
 `;

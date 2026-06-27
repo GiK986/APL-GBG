@@ -18,7 +18,7 @@ export default async function SearchPage({
   return (
     <main className="page">
       <div className="panel">
-        <SearchBox lid={lid} initialQuery={query} />
+        <SearchBox lid={lid} />
       </div>
       {items.length === 0 ? (
         <p className="empty-state">{dict.noResults}</p>
