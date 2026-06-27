@@ -1,5 +1,5 @@
 import { Inter } from 'next/font/google';
-import Link from 'next/link';
+import { AppHeaderNav } from '@/components/AppHeaderNav';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'], variable: '--font-inter' });
@@ -13,10 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="bg" className={inter.variable}>
       <body>
         <header className="app-header">
-          <span className="app-header__title">GBG Catalog</span>
-          <Link href="/" className="app-header__link">
-            Начало
-          </Link>
+          <AppHeaderNav />
         </header>
         {children}
       </body>

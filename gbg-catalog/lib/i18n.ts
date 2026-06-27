@@ -4,6 +4,8 @@ export const DEFAULT_LID: LanguageId = '32';
 
 const DICTIONARIES = {
   '32': {
+    headerTitle: 'Едрогабаритни части',
+    home: 'Начало',
     searchPlaceholder: 'Търси по OEM номер или артикулен номер...',
     searchButton: 'Търси',
     addToBasket: 'Добави',
@@ -31,6 +33,8 @@ const DICTIONARIES = {
     priceLabel: 'Цена на артикул',
   },
   '4': {
+    headerTitle: 'Body parts',
+    home: 'Home',
     searchPlaceholder: 'Search by OEM number or item number...',
     searchButton: 'Search',
     addToBasket: 'Add',
