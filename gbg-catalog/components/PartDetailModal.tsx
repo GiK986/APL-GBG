@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import type { PartDetail } from '@/lib/types';
 import { getDictionary } from '@/lib/i18n';
 import { sideLabel } from '@/lib/format';
@@ -134,7 +135,11 @@ export function PartDetailModal({
             <ul className="detail-list">
               {part.applications.map((app, i) => (
                 <li key={i}>
-                  {app.brandName} — {app.modelRaw}
+                  <Link
+                    href={`/brands/${encodeURIComponent(app.brandName)}/models/${encodeURIComponent(app.modelGroup)}/${app.modelCode}/parts?lid=${lid}`}
+                  >
+                    {app.brandName} — {app.modelRaw}
+                  </Link>
                 </li>
               ))}
             </ul>

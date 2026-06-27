@@ -31,7 +31,7 @@ export async function getPartDetail(barcode: string): Promise<PartDetail | null>
       ORDER BY similar_code
     `),
     pool.request().input('productId', sql.Int, productRow.product_id).query(`
-      SELECT DISTINCT b.name_raw AS brand_name, m.model_raw, m.model_code
+      SELECT DISTINCT b.name_raw AS brand_name, m.model_raw, m.model_code, m.model_group
       FROM dbo.applications a
       JOIN dbo.models m ON m.model_id = a.model_id
       JOIN dbo.brands b ON b.brand_id = m.brand_id
@@ -58,6 +58,7 @@ export async function getPartDetail(barcode: string): Promise<PartDetail | null>
       brandName: r.brand_name,
       modelRaw: r.model_raw,
       modelCode: r.model_code,
+      modelGroup: r.model_group,
     })),
   };
 }

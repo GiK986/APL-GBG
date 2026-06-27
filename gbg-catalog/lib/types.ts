@@ -22,6 +22,7 @@ export interface ApplicationRow {
   brandName: string;
   modelRaw: string;
   modelCode: string;
+  modelGroup: string;
 }
 
 export interface PartDetail extends ProductSummary {

@@ -865,6 +865,15 @@ button {
   color: var(--color-text);
 }
 
+.detail-list li a {
+  transition: color 150ms ease;
+}
+
+.detail-list li a:hover {
+  color: var(--color-button);
+  text-decoration: underline;
+}
+
 .detail-list li:last-child {
   border-bottom: none;
 }
