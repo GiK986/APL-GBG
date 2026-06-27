@@ -28,6 +28,8 @@ gitignored — never commit it.
 
 - "Add to basket" sends a TM1 Next Catalogue `postMessage` — see
   [`../docs/NEXT_CATALOGUE_POSTMESSAGE_BASKET.md`](../docs/NEXT_CATALOGUE_POSTMESSAGE_BASKET.md).
+- Route persistence across iframe reloads + `username`/`customerId` capture from TM1 — see
+  [`../docs/GBG_CATALOG_TM1_EMBEDDING_NOTES.md`](../docs/GBG_CATALOG_TM1_EMBEDDING_NOTES.md).
 - One-time DB migration notes (only for a fresh `GBG-BODYPARTS` copy) — see
   [`../docs/superpowers/plans/2026-06-23-gbg-catalog-mvp.md`](../docs/superpowers/plans/2026-06-23-gbg-catalog-mvp.md),
   Task 1.
