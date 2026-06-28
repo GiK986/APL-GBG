@@ -9,10 +9,11 @@ export async function getPartDetail(barcode: string): Promise<PartDetail | null>
     .request()
     .input('barcode', sql.NVarChar, barcode)
     .query(`
-      SELECT p.product_id, p.barcode, p.eng_descr, p.category_raw, cat.category_desc_bg, p.side,
+      SELECT p.product_id, p.barcode, p.eng_descr, d.desc_bg, p.category_raw, cat.category_desc_bg, p.side,
              p.sale_price, p.stock_ath, p.stock_the
       FROM dbo.products p
       LEFT JOIN dbo.categories cat ON cat.category_raw = p.category_raw
+      LEFT JOIN dbo.descriptions d ON d.eng_descr = p.eng_descr
       WHERE p.barcode = @barcode AND p.is_active = 1
     `);
 
@@ -46,6 +47,7 @@ export async function getPartDetail(barcode: string): Promise<PartDetail | null>
     productId: productRow.product_id,
     barcode: productRow.barcode,
     description: productRow.eng_descr ?? '',
+    descriptionBg: productRow.desc_bg,
     categoryRaw: productRow.category_raw,
     categoryDescBg: productRow.category_desc_bg,
     side: productRow.side?.trim() ?? null,

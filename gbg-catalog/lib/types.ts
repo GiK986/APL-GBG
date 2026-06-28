@@ -2,6 +2,7 @@ export interface ProductSummary {
   productId: number;
   barcode: string;
   description: string;
+  descriptionBg: string | null;
   categoryRaw: string | null;
   categoryDescBg: string | null;
   side: string | null;

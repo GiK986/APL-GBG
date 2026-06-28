@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getPartDetail } from '@/lib/part';
 import { getDictionary, getLanguageId } from '@/lib/i18n';
-import { categoryLabel } from '@/lib/format';
+import { categoryLabel, descriptionLabel } from '@/lib/format';
 import { StockIndicator } from '@/components/StockIndicator';
 import { AddToBasketButton } from '@/components/AddToBasketButton';
 
@@ -28,7 +28,7 @@ export default async function PartDetailPage({
         <img src={`/img/${part.barcode}`} alt={part.barcode} className="part-image" />
         <div className="part-info">
           <div className="part-barcode">{part.barcode}</div>
-          <p className="part-description">{part.description}</p>
+          <p className="part-description">{descriptionLabel(part.description, part.descriptionBg, lid)}</p>
           {part.categoryRaw && (
             <span className="result-card__category">
               {categoryLabel(part.categoryRaw, part.categoryDescBg, lid)}

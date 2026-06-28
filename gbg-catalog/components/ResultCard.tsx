@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { ProductSummary } from '@/lib/types';
-import { categoryLabel, sideLabel } from '@/lib/format';
+import { categoryLabel, descriptionLabel, sideLabel } from '@/lib/format';
 import { StockIndicator } from './StockIndicator';
 import { AddToBasketButton } from './AddToBasketButton';
 import { PartThumbnail } from './PartThumbnail';
@@ -35,7 +35,7 @@ export function ResultCard({
         >
           <span className="result-card__barcode">{product.barcode} GBG</span>
           <span className="result-card__description">
-            {product.description}
+            {descriptionLabel(product.description, product.descriptionBg, lid)}
             {side && ` ${side}`}
           </span>
         </Link>

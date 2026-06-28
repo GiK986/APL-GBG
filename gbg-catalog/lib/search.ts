@@ -52,7 +52,7 @@ export async function searchProducts(rawQuery: string, page: number): Promise<Se
     .input('offset', sql.Int, offset)
     .input('pageSize', sql.Int, PAGE_SIZE)
     .query(`
-      SELECT p.product_id, p.barcode, p.eng_descr, p.category_raw, cat.category_desc_bg, p.side,
+      SELECT p.product_id, p.barcode, p.eng_descr, d.desc_bg, p.category_raw, cat.category_desc_bg, p.side,
              p.sale_price, p.stock_ath, p.stock_the,
              CASE
                WHEN p.barcode = @exact THEN 0
@@ -65,6 +65,7 @@ export async function searchProducts(rawQuery: string, page: number): Promise<Se
              END AS rank
       FROM dbo.products p
       LEFT JOIN dbo.categories cat ON cat.category_raw = p.category_raw
+      LEFT JOIN dbo.descriptions d ON d.eng_descr = p.eng_descr
       WHERE ${SEARCH_WHERE}
       ORDER BY rank, CASE WHEN p.category_raw IS NULL THEN 1 ELSE 0 END, p.category_raw, p.barcode
       OFFSET @offset ROWS FETCH NEXT @pageSize ROWS ONLY
@@ -74,6 +75,7 @@ export async function searchProducts(rawQuery: string, page: number): Promise<Se
     productId: row.product_id,
     barcode: row.barcode,
     description: row.eng_descr ?? '',
+    descriptionBg: row.desc_bg,
     categoryRaw: row.category_raw,
     categoryDescBg: row.category_desc_bg,
     side: row.side?.trim() ?? null,

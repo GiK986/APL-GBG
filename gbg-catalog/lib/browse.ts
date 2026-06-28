@@ -208,7 +208,7 @@ export async function getPartsForModel(
     .input('pageSize', sql.Int, PAGE_SIZE);
   const rowsCategoryFilter = buildCategoryFilter(rowsRequest, categories);
   const rowsResult = await rowsRequest.query(`
-      SELECT DISTINCT p.product_id, p.barcode, p.eng_descr, p.category_raw, cat.category_desc_bg, p.side,
+      SELECT DISTINCT p.product_id, p.barcode, p.eng_descr, d.desc_bg, p.category_raw, cat.category_desc_bg, p.side,
              p.sale_price, p.stock_ath, p.stock_the,
              CASE WHEN p.category_raw IS NULL THEN 1 ELSE 0 END AS category_sort
       FROM dbo.products p
@@ -216,6 +216,7 @@ export async function getPartsForModel(
       JOIN dbo.models m ON m.model_id = a.model_id
       JOIN dbo.brands b ON b.brand_id = m.brand_id
       LEFT JOIN dbo.categories cat ON cat.category_raw = p.category_raw
+      LEFT JOIN dbo.descriptions d ON d.eng_descr = p.eng_descr
       WHERE p.is_active = 1 AND b.name_raw = @brandName AND m.model_code = @modelCode
       ${rowsCategoryFilter}
       ${availabilityFilter}
@@ -227,6 +228,7 @@ export async function getPartsForModel(
     productId: row.product_id,
     barcode: row.barcode,
     description: row.eng_descr ?? '',
+    descriptionBg: row.desc_bg,
     categoryRaw: row.category_raw,
     categoryDescBg: row.category_desc_bg,
     side: row.side?.trim() ?? null,

@@ -15,3 +15,11 @@ export function categoryLabel(
 ): string {
   return lid === '4' ? categoryRaw : categoryDescBg ?? categoryRaw;
 }
+
+export function descriptionLabel(
+  description: string,
+  descriptionBg: string | null,
+  lid: string,
+): string {
+  return lid === '4' ? description : descriptionBg ?? description;
+}

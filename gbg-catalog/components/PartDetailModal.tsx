@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import type { PartDetail } from '@/lib/types';
 import { getDictionary } from '@/lib/i18n';
-import { categoryLabel, sideLabel } from '@/lib/format';
+import { categoryLabel, descriptionLabel, sideLabel } from '@/lib/format';
 import { StockIndicator } from './StockIndicator';
 import { AddToBasketButton } from './AddToBasketButton';
 
@@ -100,7 +100,7 @@ export function PartDetailModal({
                   <div className="part-modal-info__row">
                     <span className="part-modal-info__label">{dict.descriptionLabel}:</span>
                     <span className="part-modal-info__value">
-                      {part.description}
+                      {descriptionLabel(part.description, part.descriptionBg, lid)}
                       {side && ` ${side}`}
                     </span>
                   </div>
