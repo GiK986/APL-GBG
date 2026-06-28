@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import type { PartDetail } from '@/lib/types';
 import { getDictionary } from '@/lib/i18n';
-import { sideLabel } from '@/lib/format';
+import { categoryLabel, sideLabel } from '@/lib/format';
 import { StockIndicator } from './StockIndicator';
 import { AddToBasketButton } from './AddToBasketButton';
 
@@ -106,7 +106,11 @@ export function PartDetailModal({
                   </div>
                   <div className="part-modal-info__row">
                     <span className="part-modal-info__label">{dict.categoryLabel}:</span>
-                    <span className="part-modal-info__value">{part.categoryRaw ?? dict.uncategorized}</span>
+                    <span className="part-modal-info__value">
+                      {part.categoryRaw
+                        ? categoryLabel(part.categoryRaw, part.categoryDescBg, lid)
+                        : dict.uncategorized}
+                    </span>
                     <StockIndicator stockAth={part.stockAth} stockThe={part.stockThe} lid={lid} />
                   </div>
                   <h2 className="section-label">{dict.oemNumbers}</h2>

@@ -3,6 +3,7 @@ export interface ProductSummary {
   barcode: string;
   description: string;
   categoryRaw: string | null;
+  categoryDescBg: string | null;
   side: string | null;
   salePrice: number | null;
   stockAth: boolean;
@@ -59,5 +60,6 @@ export interface ModelDetail {
 
 export interface CategorySummary {
   category: string;
+  categoryDescBg: string | null;
   partsCount: number;
 }

@@ -154,18 +154,21 @@ export async function getCategoriesForModel(
     .input('modelCode', sql.NVarChar, modelCode)
     .query(`
       SELECT COALESCE(p.category_raw, N'${UNCATEGORIZED_KEY}') AS category,
+             cat.category_desc_bg,
              COUNT(DISTINCT p.product_id) AS parts_count
       FROM dbo.products p
       JOIN dbo.applications a ON a.product_id = p.product_id
       JOIN dbo.models m ON m.model_id = a.model_id
       JOIN dbo.brands b ON b.brand_id = m.brand_id
+      LEFT JOIN dbo.categories cat ON cat.category_raw = p.category_raw
       WHERE p.is_active = 1 AND b.name_raw = @brandName AND m.model_code = @modelCode
       ${availabilityFilter}
-      GROUP BY COALESCE(p.category_raw, N'${UNCATEGORIZED_KEY}')
+      GROUP BY COALESCE(p.category_raw, N'${UNCATEGORIZED_KEY}'), cat.category_desc_bg
       ORDER BY category
     `);
   return result.recordset.map((row) => ({
     category: row.category,
+    categoryDescBg: row.category_desc_bg,
     partsCount: row.parts_count,
   }));
 }
@@ -205,13 +208,14 @@ export async function getPartsForModel(
     .input('pageSize', sql.Int, PAGE_SIZE);
   const rowsCategoryFilter = buildCategoryFilter(rowsRequest, categories);
   const rowsResult = await rowsRequest.query(`
-      SELECT DISTINCT p.product_id, p.barcode, p.eng_descr, p.category_raw, p.side,
+      SELECT DISTINCT p.product_id, p.barcode, p.eng_descr, p.category_raw, cat.category_desc_bg, p.side,
              p.sale_price, p.stock_ath, p.stock_the,
              CASE WHEN p.category_raw IS NULL THEN 1 ELSE 0 END AS category_sort
       FROM dbo.products p
       JOIN dbo.applications a ON a.product_id = p.product_id
       JOIN dbo.models m ON m.model_id = a.model_id
       JOIN dbo.brands b ON b.brand_id = m.brand_id
+      LEFT JOIN dbo.categories cat ON cat.category_raw = p.category_raw
       WHERE p.is_active = 1 AND b.name_raw = @brandName AND m.model_code = @modelCode
       ${rowsCategoryFilter}
       ${availabilityFilter}
@@ -224,6 +228,7 @@ export async function getPartsForModel(
     barcode: row.barcode,
     description: row.eng_descr ?? '',
     categoryRaw: row.category_raw,
+    categoryDescBg: row.category_desc_bg,
     side: row.side?.trim() ?? null,
     salePrice: row.sale_price,
     stockAth: Boolean(row.stock_ath),

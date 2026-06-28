@@ -80,6 +80,7 @@ export default async function ModelPartsPage({
           <CategoryFilter
             categories={categories}
             selected={selectedCategories}
+            lid={lid}
             uncategorizedLabel={dict.uncategorized}
             title={dict.categories}
             clearLabel={dict.clearFilters}

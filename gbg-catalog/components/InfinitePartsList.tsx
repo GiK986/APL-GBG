@@ -4,16 +4,23 @@ import { useEffect, useRef, useState } from 'react';
 import { ResultCard } from './ResultCard';
 import { PartDetailModal } from './PartDetailModal';
 import type { ProductSummary } from '@/lib/types';
+import { categoryLabel } from '@/lib/format';
 
 interface CategoryGroup {
   category: string;
   items: ProductSummary[];
 }
 
-function groupByCategory(items: ProductSummary[], uncategorizedLabel: string): CategoryGroup[] {
+function groupByCategory(
+  items: ProductSummary[],
+  uncategorizedLabel: string,
+  lid: string,
+): CategoryGroup[] {
   const groups: CategoryGroup[] = [];
   for (const item of items) {
-    const category = item.categoryRaw ?? uncategorizedLabel;
+    const category = item.categoryRaw
+      ? categoryLabel(item.categoryRaw, item.categoryDescBg, lid)
+      : uncategorizedLabel;
     const last = groups[groups.length - 1];
     if (last && last.category === category) {
       last.items.push(item);
@@ -77,7 +84,7 @@ export function InfinitePartsList({
     setLoading(false);
   }
 
-  const groups = groupByCategory(items, uncategorizedLabel);
+  const groups = groupByCategory(items, uncategorizedLabel, lid);
   let flatIndex = -1;
 
   return (

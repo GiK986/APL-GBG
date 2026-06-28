@@ -3,11 +3,13 @@
 import { useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { UNCATEGORIZED_KEY } from '@/lib/constants';
+import { categoryLabel } from '@/lib/format';
 import type { CategorySummary } from '@/lib/types';
 
 export function CategoryFilter({
   categories,
   selected,
+  lid,
   uncategorizedLabel,
   title,
   clearLabel,
@@ -16,6 +18,7 @@ export function CategoryFilter({
 }: {
   categories: CategorySummary[];
   selected: string[];
+  lid: string;
   uncategorizedLabel: string;
   title: string;
   clearLabel: string;
@@ -46,11 +49,15 @@ export function CategoryFilter({
 
   if (categories.length === 0) return null;
 
+  function displayLabel(c: CategorySummary): string {
+    return c.category === UNCATEGORIZED_KEY
+      ? uncategorizedLabel
+      : categoryLabel(c.category, c.categoryDescBg, lid);
+  }
+
   const query = search.trim().toLowerCase();
   const visibleCategories = query
-    ? categories.filter((c) =>
-        (c.category === UNCATEGORIZED_KEY ? uncategorizedLabel : c.category).toLowerCase().includes(query)
-      )
+    ? categories.filter((c) => displayLabel(c).toLowerCase().includes(query))
     : categories;
 
   return (
@@ -93,9 +100,7 @@ export function CategoryFilter({
                   checked={selected.includes(c.category)}
                   onChange={() => toggle(c.category)}
                 />
-                <span className="category-filter__label">
-                  {c.category === UNCATEGORIZED_KEY ? uncategorizedLabel : c.category}
-                </span>
+                <span className="category-filter__label">{displayLabel(c)}</span>
                 <span className="category-filter__count">{c.partsCount}</span>
               </label>
             </li>

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { ProductSummary } from '@/lib/types';
-import { sideLabel } from '@/lib/format';
+import { categoryLabel, sideLabel } from '@/lib/format';
 import { StockIndicator } from './StockIndicator';
 import { AddToBasketButton } from './AddToBasketButton';
 import { PartThumbnail } from './PartThumbnail';
@@ -40,7 +40,9 @@ export function ResultCard({
           </span>
         </Link>
         {showCategory && product.categoryRaw && (
-          <span className="result-card__category">{product.categoryRaw}</span>
+          <span className="result-card__category">
+            {categoryLabel(product.categoryRaw, product.categoryDescBg, lid)}
+          </span>
         )}
         <StockIndicator stockAth={product.stockAth} stockThe={product.stockThe} lid={lid} />
       </div>
