@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import type { ProductSummary } from '@/lib/types';
 import { categoryLabel, descriptionLabel, sideLabel } from '@/lib/format';
 import { StockIndicator } from './StockIndicator';
@@ -14,7 +13,7 @@ export function ResultCard({
   product: ProductSummary;
   lid: string;
   showCategory?: boolean;
-  onOpenDetail?: () => void;
+  onOpenDetail: () => void;
 }) {
   const side = sideLabel(product.side);
   const inStock = product.stockAth || product.stockThe;
@@ -23,22 +22,13 @@ export function ResultCard({
     <div className="result-card">
       <PartThumbnail barcode={product.barcode} />
       <div className="result-card__body">
-        <Link
-          href={`/part/${product.barcode}?lid=${lid}`}
-          className="result-card__title"
-          onClick={(e) => {
-            if (!onOpenDetail) return;
-            if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-            e.preventDefault();
-            onOpenDetail();
-          }}
-        >
+        <button type="button" className="result-card__title" onClick={onOpenDetail}>
           <span className="result-card__barcode">{product.barcode} GBG</span>
           <span className="result-card__description">
             {descriptionLabel(product.description, product.descriptionBg, lid)}
             {side && ` ${side}`}
           </span>
-        </Link>
+        </button>
         {showCategory && product.categoryRaw && (
           <span className="result-card__category">
             {categoryLabel(product.categoryRaw, product.categoryDescBg, lid)}
