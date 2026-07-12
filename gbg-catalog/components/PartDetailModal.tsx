@@ -7,6 +7,11 @@ import { getDictionary } from '@/lib/i18n';
 import { categoryLabel, descriptionLabel, sideLabel } from '@/lib/format';
 import { StockIndicator } from './StockIndicator';
 import { AddToBasketButton } from './AddToBasketButton';
+import { TM1_ORIGIN } from '@/lib/tm1';
+
+function openOeAftermarket(oeNumber: string) {
+  window.parent.postMessage(JSON.stringify({ openOeAftermarket: { oeNumber } }), TM1_ORIGIN);
+}
 
 export function PartDetailModal({
   barcode,
@@ -116,7 +121,15 @@ export function PartDetailModal({
                   <h2 className="section-label">{dict.oemNumbers}</h2>
                   <ul className="oem-chip-list">
                     {part.oemNumbers.map((oem) => (
-                      <li key={oem.oemCode}>{oem.oemCode}</li>
+                      <li key={oem.oemCode}>
+                        <button
+                          type="button"
+                          className="oem-chip"
+                          onClick={() => openOeAftermarket(oem.oemCode)}
+                        >
+                          {oem.oemCode}
+                        </button>
+                      </li>
                     ))}
                   </ul>
                 </div>

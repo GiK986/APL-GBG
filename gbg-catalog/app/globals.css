@@ -981,7 +981,8 @@ button {
   margin: 0 0 var(--space-4);
 }
 
-.oem-chip-list li {
+.oem-chip-list .oem-chip {
+  font: inherit;
   font-size: 13px;
   padding: 4px 10px;
   background: var(--color-surface-muted);
@@ -989,6 +990,12 @@ button {
   border-radius: var(--radius-md);
   color: var(--color-text);
   white-space: nowrap;
+  cursor: pointer;
+}
+
+.oem-chip-list .oem-chip:hover {
+  background: var(--color-surface);
+  border-color: var(--color-primary);
 }
 
 /* ---------- Part detail modal ---------- */

@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import { getDictionary } from '@/lib/i18n';
-
-const TM1_ORIGIN = process.env.NEXT_PUBLIC_TM1_ORIGIN ?? '*';
+import { TM1_ORIGIN } from '@/lib/tm1';
 
 export function AddToBasketButton({
   barcode,
