@@ -9,8 +9,19 @@ import { StockIndicator } from './StockIndicator';
 import { AddToBasketButton } from './AddToBasketButton';
 import { TM1_ORIGIN } from '@/lib/tm1';
 
+const OE_REFERENCE_SEARCH_FILTER = 66; // SearchFilters.OeReference | TradeReference_KARTREF
+
 function openOeAftermarket(oeNumber: string) {
-  window.parent.postMessage(JSON.stringify({ openOeAftermarket: { oeNumber } }), TM1_ORIGIN);
+  window.parent.postMessage(
+    JSON.stringify({
+      openArticleList: {
+        direct: { query: oeNumber, searchFilter: OE_REFERENCE_SEARCH_FILTER },
+        inModal: true,
+        useNewModal: true,
+      },
+    }),
+    TM1_ORIGIN,
+  );
 }
 
 export function PartDetailModal({
