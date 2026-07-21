@@ -9,6 +9,17 @@ function buildPath(pathname: string, search: string): string {
   return search ? `${pathname}?${search}` : pathname;
 }
 
+// Keeps the saved path's position, but swaps in the lid the embedding page
+// just sent on this load — otherwise restoring the saved path would silently
+// revert a language switch back to whatever lid was current when it was saved.
+function withCurrentLid(savedPath: string, currentLid: string | null): string {
+  if (!currentLid) return savedPath;
+  const [savedPathname, savedSearch = ''] = savedPath.split('?');
+  const params = new URLSearchParams(savedSearch);
+  params.set('lid', currentLid);
+  return buildPath(savedPathname, params.toString());
+}
+
 function RoutePersistenceInner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -25,9 +36,11 @@ function RoutePersistenceInner() {
     hasRestored.current = true;
     if (pathname !== '/') return;
     const saved = sessionStorage.getItem(STORAGE_KEY);
+    if (!saved) return;
     const current = buildPath(pathname, searchParams.toString());
-    if (saved && saved !== current) {
-      router.replace(saved);
+    const restored = withCurrentLid(saved, searchParams.get('lid'));
+    if (restored !== current) {
+      router.replace(restored);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
