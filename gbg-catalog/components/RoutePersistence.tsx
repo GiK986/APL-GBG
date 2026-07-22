@@ -24,30 +24,50 @@ function RoutePersistenceInner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const hasRestored = useRef(false);
+  const hasCheckedInitialLoad = useRef(false);
+  const storageKey = useRef(STORAGE_KEY);
 
-  // Runs exactly once per real page load (this component lives in the root
-  // layout, which never remounts during client-side navigation) — restores
-  // the last visited path if the embedding page reloaded the iframe back to
-  // its fixed entry URL. Only fires on "/" so a real deep link (someone
-  // opening a specific page directly) is never hijacked.
+  // Runs once per real page load (this component lives in the root layout,
+  // which never remounts during client-side navigation) — restores the last
+  // visited path if the embedding page reloaded the iframe back to its fixed
+  // entry URL. Only fires on "/" so a real deep link (someone opening a
+  // specific page directly) is never hijacked.
+  //
+  // TM1 can host several of our iframes at once (one per TM1 task tab), all
+  // same-origin and sharing one sessionStorage bucket — so the key is
+  // namespaced by `tid` (TM1's task id, passed once on the entry URL) to stop
+  // tabs from restoring each other's path. Falls back to a shared key when
+  // `tid` is absent (local dev, direct access, or before TM1 adds it). `tid`
+  // only ever arrives on this first load — later client-side navigations
+  // won't carry it — so it's captured once into a ref.
   useEffect(() => {
-    if (hasRestored.current) return;
-    hasRestored.current = true;
+    if (hasCheckedInitialLoad.current) return;
+    hasCheckedInitialLoad.current = true;
+    const tid = searchParams.get('tid');
+    if (tid) storageKey.current = `${STORAGE_KEY}:${tid}`;
     if (pathname !== '/') return;
-    const saved = sessionStorage.getItem(STORAGE_KEY);
-    if (!saved) return;
-    const current = buildPath(pathname, searchParams.toString());
-    const restored = withCurrentLid(saved, searchParams.get('lid'));
-    if (restored !== current) {
-      router.replace(restored);
+    try {
+      const saved = sessionStorage.getItem(storageKey.current);
+      if (!saved) return;
+      const current = buildPath(pathname, searchParams.toString());
+      const restored = withCurrentLid(saved, searchParams.get('lid'));
+      if (restored !== current) {
+        router.replace(restored);
+      }
+    } catch {
+      // sessionStorage unavailable (e.g. partitioned/blocked third-party
+      // storage in a cross-origin iframe) — just stay on '/'.
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Keeps the saved path up to date on every navigation.
   useEffect(() => {
-    sessionStorage.setItem(STORAGE_KEY, buildPath(pathname, searchParams.toString()));
+    try {
+      sessionStorage.setItem(storageKey.current, buildPath(pathname, searchParams.toString()));
+    } catch {
+      // ignore — see above
+    }
   }, [pathname, searchParams]);
 
   return null;
