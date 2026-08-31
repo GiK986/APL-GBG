@@ -42,3 +42,17 @@ export function findModelImagePath(modelCode: string): string | null {
   }
   return resolveModelImagePath(modelsDir, modelCode);
 }
+
+export function findToolImagePath(barcode: string): string | null {
+  const toolsDir = process.env.TOOLS_IMAGES_DIR;
+  if (!toolsDir) return null;
+  // Reject path-traversal attempts (.. or path separators)
+  if (barcode.includes('..') || barcode.includes('/') || barcode.includes('\\')) {
+    return null;
+  }
+  for (const ext of PART_IMAGE_EXTENSIONS) {
+    const candidate = path.join(toolsDir, `${barcode}.${ext}`);
+    if (existsSync(candidate)) return candidate;
+  }
+  return null;
+}

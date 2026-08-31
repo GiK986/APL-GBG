@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { resolveImagePath, findImagePath } from './images';
+import { resolveImagePath, findImagePath, findToolImagePath } from './images';
 
 describe('resolveImagePath', () => {
   it('builds the path from the first 4 digits of the barcode', () => {
@@ -28,5 +28,30 @@ describe('findImagePath', () => {
 
   it('rejects barcodes with backslash path traversal', () => {
     expect(findImagePath('..\\windows\\system32')).toBeNull();
+  });
+});
+
+describe('findToolImagePath', () => {
+  const originalEnv = process.env.TOOLS_IMAGES_DIR;
+
+  beforeEach(() => {
+    process.env.TOOLS_IMAGES_DIR = '/tmp/tools';
+  });
+
+  afterEach(() => {
+    process.env.TOOLS_IMAGES_DIR = originalEnv;
+  });
+
+  it('rejects barcodes with .. path traversal', () => {
+    expect(findToolImagePath('../../etc/passwd')).toBeNull();
+  });
+
+  it('rejects barcodes with backslash path traversal', () => {
+    expect(findToolImagePath('..\\windows\\system32')).toBeNull();
+  });
+
+  it('returns null when TOOLS_IMAGES_DIR is not set', () => {
+    delete process.env.TOOLS_IMAGES_DIR;
+    expect(findToolImagePath('917.0779')).toBeNull();
   });
 });
