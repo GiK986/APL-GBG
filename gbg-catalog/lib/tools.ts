@@ -1,17 +1,24 @@
 import sql from 'mssql';
 import { getPool } from './db';
-import { PAGE_SIZE } from './constants';
+import { PAGE_SIZE, UNCATEGORIZED_KEY } from './constants';
 import type { CategorySummary, ProductSummary } from './types';
 
 function buildCategoryFilter(request: sql.Request, categories: string[] | undefined): string {
   if (!categories || categories.length === 0) return '';
+  const real = categories.filter((c) => c !== UNCATEGORIZED_KEY);
+  const includesUncategorized = categories.includes(UNCATEGORIZED_KEY);
+
   const conditions: string[] = [];
-  categories.forEach((cat, i) => {
+  real.forEach((cat, i) => {
     const paramName = `cat${i}`;
     request.input(paramName, sql.NVarChar, cat);
     conditions.push(`@${paramName}`);
   });
-  return `AND p.category_raw IN (${conditions.join(', ')})`;
+
+  const parts: string[] = [];
+  if (conditions.length > 0) parts.push(`p.category_raw IN (${conditions.join(', ')})`);
+  if (includesUncategorized) parts.push('p.category_raw IS NULL');
+  return parts.length > 0 ? `AND (${parts.join(' OR ')})` : '';
 }
 
 function buildAvailabilityFilter(availableOnly: boolean | undefined): string {
@@ -21,11 +28,13 @@ function buildAvailabilityFilter(availableOnly: boolean | undefined): string {
 export async function getToolCategories(): Promise<CategorySummary[]> {
   const pool = await getPool();
   const result = await pool.request().query(`
-    SELECT p.category_raw AS category, p.category_desc_bg, COUNT(*) AS parts_count
+    SELECT COALESCE(p.category_raw, N'${UNCATEGORIZED_KEY}') AS category,
+           p.category_desc_bg,
+           COUNT(*) AS parts_count
     FROM dbo.tool_products p
     WHERE p.is_active = 1
-    GROUP BY p.category_raw, p.category_desc_bg
-    ORDER BY p.category_raw
+    GROUP BY COALESCE(p.category_raw, N'${UNCATEGORIZED_KEY}'), p.category_desc_bg
+    ORDER BY category
   `);
   return result.recordset.map((row) => ({
     category: row.category,
@@ -60,12 +69,13 @@ export async function getToolProducts(
   const rowsCategoryFilter = buildCategoryFilter(rowsRequest, categories);
   const rowsResult = await rowsRequest.query(`
     SELECT p.tool_product_id, p.barcode, p.wholesaler_article_number, p.eng_descr, p.desc_bg,
-           p.category_raw, p.category_desc_bg, p.sale_price, p.stock_ath, p.stock_the
+           p.category_raw, p.category_desc_bg, p.sale_price, p.stock_ath, p.stock_the,
+           CASE WHEN p.category_raw IS NULL THEN 1 ELSE 0 END AS category_sort
     FROM dbo.tool_products p
     WHERE p.is_active = 1
     ${rowsCategoryFilter}
     ${availabilityFilter}
-    ORDER BY p.category_raw, p.barcode
+    ORDER BY category_sort, p.category_raw, p.barcode
     OFFSET @offset ROWS FETCH NEXT @pageSize ROWS ONLY
   `);
 

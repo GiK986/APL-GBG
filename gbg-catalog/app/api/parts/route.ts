@@ -8,7 +8,9 @@ export async function GET(request: NextRequest) {
   const modelCode = searchParams.get('modelCode');
   const page = parsePage(searchParams.get('page') ?? undefined);
   const categoriesParam = searchParams.get('categories');
-  const categories = categoriesParam ? categoriesParam.split(',').filter(Boolean) : undefined;
+  const categories = categoriesParam
+    ? categoriesParam.split(',').filter(Boolean).map(decodeURIComponent)
+    : undefined;
   const availableOnly = searchParams.get('available') === '1';
 
   if (!brand || !modelCode) {

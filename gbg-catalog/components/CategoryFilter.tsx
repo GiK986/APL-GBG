@@ -33,7 +33,7 @@ export function CategoryFilter({
   function setCategories(next: string[]) {
     const params = new URLSearchParams(searchParams.toString());
     if (next.length > 0) {
-      params.set('categories', next.join(','));
+      params.set('categories', next.map(encodeURIComponent).join(','));
     } else {
       params.delete('categories');
     }

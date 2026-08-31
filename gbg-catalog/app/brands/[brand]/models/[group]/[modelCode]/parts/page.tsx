@@ -18,7 +18,9 @@ export default async function ModelPartsPage({
   const dict = getDictionary(lid);
   const brandName = decodeURIComponent(brand);
   const modelGroup = decodeURIComponent(group);
-  const selectedCategories = sp.categories ? sp.categories.split(',').filter(Boolean) : [];
+  const selectedCategories = sp.categories
+    ? sp.categories.split(',').filter(Boolean).map(decodeURIComponent)
+    : [];
   const availableOnly = sp.available === '1';
 
   const [{ items, total }, modelDetail, categories] = await Promise.all([
@@ -67,7 +69,9 @@ export default async function ModelPartsPage({
               fetchParams={{
                 brand: brandName,
                 modelCode,
-                ...(selectedCategories.length ? { categories: selectedCategories.join(',') } : {}),
+                ...(selectedCategories.length
+                  ? { categories: selectedCategories.map(encodeURIComponent).join(',') }
+                  : {}),
                 ...(availableOnly ? { available: '1' } : {}),
               }}
               uncategorizedLabel={dict.uncategorized}

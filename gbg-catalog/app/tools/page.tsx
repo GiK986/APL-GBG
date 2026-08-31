@@ -13,7 +13,9 @@ export default async function ToolsPage({
   const sp = await searchParams;
   const lid = getLanguageId(sp.lid);
   const dict = getDictionary(lid);
-  const selectedCategories = sp.categories ? sp.categories.split(',').filter(Boolean) : [];
+  const selectedCategories = sp.categories
+    ? sp.categories.split(',').filter(Boolean).map(decodeURIComponent)
+    : [];
   const availableOnly = sp.available === '1';
 
   const [{ items, total }, categories] = await Promise.all([
@@ -36,7 +38,9 @@ export default async function ToolsPage({
               lid={lid}
               fetchUrl="/api/tools"
               fetchParams={{
-                ...(selectedCategories.length ? { categories: selectedCategories.join(',') } : {}),
+                ...(selectedCategories.length
+                  ? { categories: selectedCategories.map(encodeURIComponent).join(',') }
+                  : {}),
                 ...(availableOnly ? { available: '1' } : {}),
               }}
               uncategorizedLabel={dict.uncategorized}

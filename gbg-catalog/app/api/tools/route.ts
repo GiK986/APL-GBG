@@ -6,7 +6,9 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const page = parsePage(searchParams.get('page') ?? undefined);
   const categoriesParam = searchParams.get('categories');
-  const categories = categoriesParam ? categoriesParam.split(',').filter(Boolean) : undefined;
+  const categories = categoriesParam
+    ? categoriesParam.split(',').filter(Boolean).map(decodeURIComponent)
+    : undefined;
   const availableOnly = searchParams.get('available') === '1';
 
   const { items, total } = await getToolProducts(page, categories, availableOnly);
