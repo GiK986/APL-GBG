@@ -54,6 +54,8 @@ export async function getPartDetail(barcode: string): Promise<PartDetail | null>
     salePrice: productRow.sale_price,
     stockAth: Boolean(productRow.stock_ath),
     stockThe: Boolean(productRow.stock_the),
+    isTool: false,
+    wholesalerArticleNumber: `${productRow.barcode} GBG`,
     oemNumbers: oemResult.recordset.map((r) => ({
       oemCode: r.oem_code,
       netOemCode: r.net_oem_code,

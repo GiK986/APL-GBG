@@ -82,6 +82,8 @@ export async function searchProducts(rawQuery: string, page: number): Promise<Se
     salePrice: row.sale_price,
     stockAth: Boolean(row.stock_ath),
     stockThe: Boolean(row.stock_the),
+    isTool: false,
+    wholesalerArticleNumber: `${row.barcode} GBG`,
   }));
 
   return { items, total: countResult.recordset[0].total };

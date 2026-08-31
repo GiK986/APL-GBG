@@ -9,6 +9,8 @@ export interface ProductSummary {
   salePrice: number | null;
   stockAth: boolean;
   stockThe: boolean;
+  isTool: boolean;
+  wholesalerArticleNumber: string;
 }
 
 export interface OemNumberRow {
