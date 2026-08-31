@@ -5,11 +5,11 @@ import { getDictionary } from '@/lib/i18n';
 import { TM1_ORIGIN } from '@/lib/tm1';
 
 export function AddToBasketButton({
-  barcode,
+  wholesalerArticleNumber,
   lid,
   inStock,
 }: {
-  barcode: string;
+  wholesalerArticleNumber: string;
   lid: string;
   inStock: boolean;
 }) {
@@ -18,7 +18,7 @@ export function AddToBasketButton({
 
   function handleClick() {
     const payload = JSON.stringify({
-      addPartsToBasket: [{ wholesalerArticleNumber: `${barcode} GBG`, quantity: '1' }],
+      addPartsToBasket: [{ wholesalerArticleNumber, quantity: '1' }],
     });
     window.parent.postMessage(payload, TM1_ORIGIN);
     setAdded(true);

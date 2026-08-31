@@ -84,6 +84,7 @@ export function PartDetailModal({
   }, [onClose, onPrev, onNext, hasPrev, hasNext]);
 
   const side = part ? sideLabel(part.side) : '';
+  const imageBase = part?.isTool ? '/img/tools' : '/img';
 
   return (
     <div className="part-modal-overlay">
@@ -106,12 +107,12 @@ export function PartDetailModal({
           <>
             <div className="panel part-header">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`/img/${part.barcode}`} alt={part.barcode} className="part-image" />
+              <img src={`${imageBase}/${part.barcode}`} alt={part.barcode} className="part-image" />
               <div className="part-modal-info">
                 <div className="part-modal-info__main">
                   <div className="part-modal-info__row">
                     <span className="part-modal-info__label">{dict.partNumberLabel}:</span>
-                    <span className="part-modal-info__value">{part.barcode} GBG</span>
+                    <span className="part-modal-info__value">{part.wholesalerArticleNumber}</span>
                   </div>
                   <div className="part-modal-info__row">
                     <span className="part-modal-info__label">{dict.descriptionLabel}:</span>
@@ -129,20 +130,24 @@ export function PartDetailModal({
                     </span>
                     <StockIndicator stockAth={part.stockAth} stockThe={part.stockThe} lid={lid} />
                   </div>
-                  <h2 className="section-label">{dict.oemNumbers}</h2>
-                  <ul className="oem-chip-list">
-                    {part.oemNumbers.map((oem) => (
-                      <li key={oem.oemCode}>
-                        <button
-                          type="button"
-                          className="oem-chip"
-                          onClick={() => openOeAftermarket(oem.oemCode)}
-                        >
-                          {oem.oemCode}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
+                  {part.oemNumbers.length > 0 && (
+                    <>
+                      <h2 className="section-label">{dict.oemNumbers}</h2>
+                      <ul className="oem-chip-list">
+                        {part.oemNumbers.map((oem) => (
+                          <li key={oem.oemCode}>
+                            <button
+                              type="button"
+                              className="oem-chip"
+                              onClick={() => openOeAftermarket(oem.oemCode)}
+                            >
+                              {oem.oemCode}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
                 </div>
                 <div className="part-modal-info__side">
                   <span
@@ -151,7 +156,7 @@ export function PartDetailModal({
                     {part.salePrice != null ? `${part.salePrice.toFixed(2)} €` : '—'}
                   </span>
                   <AddToBasketButton
-                    barcode={part.barcode}
+                    wholesalerArticleNumber={part.wholesalerArticleNumber}
                     lid={lid}
                     inStock={part.stockAth || part.stockThe}
                   />
@@ -159,18 +164,22 @@ export function PartDetailModal({
               </div>
             </div>
 
-            <h2 className="section-label">{dict.usedIn}</h2>
-            <ul className="detail-list">
-              {part.applications.map((app, i) => (
-                <li key={i}>
-                  <Link
-                    href={`/brands/${encodeURIComponent(app.brandName)}/models/${encodeURIComponent(app.modelGroup)}/${app.modelCode}/parts?lid=${lid}`}
-                  >
-                    {app.brandName} — {app.modelRaw}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            {part.applications.length > 0 && (
+              <>
+                <h2 className="section-label">{dict.usedIn}</h2>
+                <ul className="detail-list">
+                  {part.applications.map((app, i) => (
+                    <li key={i}>
+                      <Link
+                        href={`/brands/${encodeURIComponent(app.brandName)}/models/${encodeURIComponent(app.modelGroup)}/${app.modelCode}/parts?lid=${lid}`}
+                      >
+                        {app.brandName} — {app.modelRaw}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
           </>
         )}
       </div>

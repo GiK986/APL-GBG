@@ -3,9 +3,15 @@
 import { useState } from 'react';
 import { ImageLightbox } from './ImageLightbox';
 
-export function PartThumbnail({ barcode }: { barcode: string }) {
+export function PartThumbnail({
+  barcode,
+  imageBase = '/img',
+}: {
+  barcode: string;
+  imageBase?: string;
+}) {
   const [open, setOpen] = useState(false);
-  const src = `/img/${barcode}`;
+  const src = `${imageBase}/${barcode}`;
 
   return (
     <div className="part-thumbnail">
