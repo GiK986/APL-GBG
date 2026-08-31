@@ -18,7 +18,37 @@ export async function getPartDetail(barcode: string): Promise<PartDetail | null>
     `);
 
   const productRow = productResult.recordset[0];
-  if (!productRow) return null;
+
+  if (!productRow) {
+    const toolResult = await pool
+      .request()
+      .input('barcode', sql.NVarChar, barcode)
+      .query(`
+        SELECT tool_product_id, barcode, wholesaler_article_number, eng_descr, desc_bg,
+               category_raw, category_desc_bg, sale_price, stock_ath, stock_the
+        FROM dbo.tool_products
+        WHERE barcode = @barcode AND is_active = 1
+      `);
+    const toolRow = toolResult.recordset[0];
+    if (!toolRow) return null;
+    return {
+      productId: toolRow.tool_product_id,
+      barcode: toolRow.barcode,
+      description: toolRow.eng_descr ?? '',
+      descriptionBg: toolRow.desc_bg,
+      categoryRaw: toolRow.category_raw,
+      categoryDescBg: toolRow.category_desc_bg,
+      side: null,
+      salePrice: toolRow.sale_price,
+      stockAth: Boolean(toolRow.stock_ath),
+      stockThe: Boolean(toolRow.stock_the),
+      isTool: true,
+      wholesalerArticleNumber: toolRow.wholesaler_article_number,
+      oemNumbers: [],
+      crossRefs: [],
+      applications: [],
+    };
+  }
 
   const [oemResult, crossRefResult, applicationResult] = await Promise.all([
     pool.request().input('productId', sql.Int, productRow.product_id).query(`
