@@ -9,7 +9,7 @@ function HeaderContent({ lid }: { lid: string }) {
   const dict = getDictionary(lid);
   return (
     <>
-      <Link href="/" className="app-header__home" aria-label={dict.home}>
+      <Link href={`/?lid=${lid}`} className="app-header__home" aria-label={dict.home}>
         <svg
           className="app-header__home-icon"
           viewBox="0 0 20 20"

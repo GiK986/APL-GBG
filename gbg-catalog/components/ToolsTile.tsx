@@ -8,11 +8,15 @@ export function ToolsTile({ lid, label }: { lid: LanguageId; label: string }) {
         <span className="brand-card__badge tools-tile__badge" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="26" height="26">
             <path
-              d="M14.7 6.3a4 4 0 0 1-5.1 5.1L4 17l3 3 5.6-5.6a4 4 0 0 1 5.1-5.1l-2.5 2.5-2-2 2.5-2.5Z"
+              d="M8 9V6.5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2V9"
               stroke="currentColor"
               strokeWidth="1.6"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
+            <rect x="3" y="9" width="18" height="10.5" rx="2" stroke="currentColor" strokeWidth="1.6" />
+            <path d="M3 13.2h18" stroke="currentColor" strokeWidth="1.6" />
+            <path d="M10.8 12.4v1.6M13.2 12.4v1.6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
           </svg>
         </span>
         <span className="brand-card__name">{label}</span>
