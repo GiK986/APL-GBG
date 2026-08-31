@@ -757,6 +757,20 @@ button {
   color: var(--color-text-tertiary);
 }
 
+/* ---------- Tools tile ---------- */
+
+.tools-tile-wrap {
+  margin-bottom: var(--space-4);
+}
+
+.tools-tile {
+  width: 160px;
+}
+
+.tools-tile__badge {
+  color: var(--color-accent);
+}
+
 /* ---------- Model card grid ---------- */
 
 .model-grid {
